@@ -1,0 +1,415 @@
+/*
+  Design direction: "flight log / control tower", not a generic chat UI.
+  The product's whole thesis is transparency — you should feel like you're
+  watching a pilot's instrument panel, not a marketing landing page.
+
+  Palette
+    --ink        #0E1420   deep instrument-panel navy (background)
+    --panel      #161D2E   raised panel surface
+    --line       #2A3448   hairline dividers / borders
+    --paper      #EDEAE2   warm off-white (primary text, "paper" readouts)
+    --dim        #8A94AC   secondary text
+    --signal     #E8A33D   amber — the single accent, used for anything "live"
+    --go         #5FBF8F   confirmed / allowed
+    --stop       #E2665C   blocked / over budget
+
+  Type
+    Display  : "Fraunces"       — used sparingly, for the wordmark + section titles
+    Body     : "Inter"          — everything else
+    Data/mono: "IBM Plex Mono"  — numbers, trace feed, budget ledger, plan IDs
+*/
+
+:root {
+  --ink: #0e1420;
+  --panel: #161d2e;
+  --panel-raised: #1c2338;
+  --line: #2a3448;
+  --paper: #edeae2;
+  --dim: #8a94ac;
+  --signal: #e8a33d;
+  --go: #5fbf8f;
+  --stop: #e2665c;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    linear-gradient(180deg, rgba(232, 163, 61, 0.04), transparent 300px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.015) 0px, transparent 1px, transparent 2px);
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--ink);
+}
+
+a {
+  color: var(--signal);
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  letter-spacing: -0.01em;
+}
+
+.dim {
+  color: var(--dim);
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px -6px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+}
+
+/* ---------------------------------------------------------------------------
+   Status dots (plan timeline)
+--------------------------------------------------------------------------- */
+.status-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+.status-dot.pending {
+  background: var(--dim);
+}
+.status-dot.in_progress {
+  background: var(--signal);
+  box-shadow: 0 0 8px var(--signal);
+  animation: pulse 1.2s infinite ease-in-out;
+}
+.status-dot.done {
+  background: var(--go);
+}
+.status-dot.failed {
+  background: var(--stop);
+}
+.status-dot.skipped {
+  background: var(--dim);
+  opacity: 0.4;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* ---------------------------------------------------------------------------
+   Micro-animations
+--------------------------------------------------------------------------- */
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.slide-up {
+  animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+/* ---------------------------------------------------------------------------
+   Step progress bar
+--------------------------------------------------------------------------- */
+.progress-bar {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 28px;
+}
+
+.progress-step {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.progress-step-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  border: 2px solid var(--line);
+  background: var(--panel);
+  color: var(--dim);
+}
+
+.progress-step-dot.active {
+  border-color: var(--signal);
+  background: var(--signal);
+  color: var(--ink);
+  box-shadow: 0 0 16px rgba(232, 163, 61, 0.4);
+}
+
+.progress-step-dot.completed {
+  border-color: var(--go);
+  background: var(--go);
+  color: var(--ink);
+}
+
+.progress-step-line {
+  flex: 1;
+  height: 2px;
+  background: var(--line);
+  transition: background 0.3s ease;
+}
+
+.progress-step-line.completed {
+  background: var(--go);
+}
+
+.progress-step-label {
+  font-size: 11px;
+  color: var(--dim);
+  text-align: center;
+  margin-top: 6px;
+  font-family: var(--font-mono);
+}
+
+.progress-step-label.active {
+  color: var(--signal);
+}
+
+/* ---------------------------------------------------------------------------
+   Selectable option cards (flights, hotels)
+--------------------------------------------------------------------------- */
+.option-card {
+  background: var(--panel-raised);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.option-card:hover {
+  border-color: rgba(232, 163, 61, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.6);
+}
+
+.option-card.selected {
+  border-color: var(--signal);
+  box-shadow: 0 0 0 1px var(--signal), 0 8px 32px -8px rgba(232, 163, 61, 0.3);
+}
+
+.option-card.selected::after {
+  content: "✓";
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 24px;
+  height: 24px;
+  background: var(--signal);
+  color: var(--ink);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------------------------
+   Badges
+--------------------------------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+
+.badge-recommended {
+  background: rgba(232, 163, 61, 0.15);
+  color: var(--signal);
+  border: 1px solid rgba(232, 163, 61, 0.3);
+}
+
+.badge-category {
+  background: rgba(138, 148, 172, 0.12);
+  color: var(--dim);
+  border: 1px solid rgba(138, 148, 172, 0.2);
+}
+
+.badge-free {
+  background: rgba(95, 191, 143, 0.12);
+  color: var(--go);
+  border: 1px solid rgba(95, 191, 143, 0.2);
+}
+
+/* ---------------------------------------------------------------------------
+   Section headers
+--------------------------------------------------------------------------- */
+.section-header {
+  font-family: var(--font-display);
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+
+.section-sub {
+  color: var(--dim);
+  font-size: 14px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------------------------
+   Primary / secondary buttons
+--------------------------------------------------------------------------- */
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: var(--signal);
+  color: var(--ink);
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+}
+
+.btn-secondary {
+  padding: 12px 20px;
+  background: transparent;
+  color: var(--signal);
+  border: 1.5px solid var(--signal);
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.btn-confirm {
+  width: 100%;
+  padding: 14px;
+  background: var(--go);
+  color: var(--ink);
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* ---------------------------------------------------------------------------
+   Place cards
+--------------------------------------------------------------------------- */
+.place-card {
+  background: var(--panel-raised);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px;
+  transition: transform 0.2s ease;
+}
+
+.place-card:hover {
+  transform: translateY(-2px);
+}
+
+/* ---------------------------------------------------------------------------
+   Layout grid
+--------------------------------------------------------------------------- */
+.layout-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .status-dot.in_progress { animation: none; }
+  .slide-up, .fade-in { animation: none; }
+  .option-card:hover { transform: none; }
+  .place-card:hover { transform: none; }
+  button:hover:not(:disabled) { transform: none; }
+}
+
+@media (max-width: 768px) {
+  .progress-step-label {
+    font-size: 9px;
+  }
+
+  .progress-step-dot {
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+  }
+
+  .section-header {
+    font-size: 20px;
+  }
+}
