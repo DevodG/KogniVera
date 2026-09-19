@@ -9,6 +9,10 @@ import CartConfirm from "./components/CartConfirm.jsx";
 import FlightPicker from "./components/FlightPicker.jsx";
 import HotelPicker from "./components/HotelPicker.jsx";
 import PlacesGrid from "./components/PlacesGrid.jsx";
+import LanguageSwitcher from "./components/LanguageSwitcher.jsx";
+import ComponentSwapper from "./components/ComponentSwapper.jsx";
+import AuthModal from "./components/AuthModal.jsx";
+import { useT } from "./i18n.js";
 
 // Step definitions for the progress bar
 const STEPS = [
@@ -26,7 +30,14 @@ function getStepIndex(status) {
   return 0;
 }
 
-function ProgressBar({ currentStep }) {
+function ProgressBar({ currentStep, t }) {
+  const STEPS = [
+    { id: "intake", label: t("step.details") },
+    { id: "flight", label: t("step.flight") },
+    { id: "hotel", label: t("step.hotel") },
+    { id: "review", label: t("step.review") },
+  ];
+
   return (
     <div className="progress-bar">
       {STEPS.map((step, i) => (
@@ -56,9 +67,50 @@ function ProgressBar({ currentStep }) {
 }
 
 export default function App() {
+  const { t, setLang } = useT();
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  
+  // Auth state
+  const [user, setUser] = useState(null);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+
+  useEffect(() => {
+    // Check for existing token
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetch("/api/auth/me", {
+        headers: { "Authorization": `Bearer ${token}` }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.id) {
+          setUser(data);
+          if (data.preferred_languages) {
+            setLang(data.preferred_languages.split(",")[0]);
+          }
+        } else {
+          localStorage.removeItem("token");
+        }
+      })
+      .catch(console.error);
+    }
+  }, [setLang]);
+
+  const handleLoginSuccess = (userData) => {
+    setUser(userData);
+    setShowAuthModal(false);
+    if (userData.preferred_languages) {
+      setLang(userData.preferred_languages.split(",")[0]);
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+  };
+
   const [selectedFlight, setSelectedFlight] = useState(null);
   const [selectedHotel, setSelectedHotel] = useState(null);
 
@@ -141,17 +193,37 @@ export default function App() {
   return (
     <div style={{ minHeight: "100vh", padding: "32px 24px" }}>
       {/* Header */}
-      <header style={{ maxWidth: 900, margin: "0 auto 28px" }}>
+      <header style={{ maxWidth: 900, margin: "0 auto 28px", display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
           <span style={{ fontFamily: "var(--font-display)", fontSize: 24, color: "var(--signal)" }}>◈</span>
-          <span style={{ fontFamily: "var(--font-display)", fontSize: 24 }}>Waypoint</span>
-          <span className="dim mono" style={{ fontSize: 12 }}>agentic travel concierge</span>
+          <span style={{ fontFamily: "var(--font-display)", fontSize: 24 }}>{t("app.title")}</span>
+          <span className="dim mono" style={{ fontSize: 12 }}>{t("app.subtitle")}</span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <LanguageSwitcher />
+          {user ? (
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ fontSize: 12, color: "var(--dim)" }}>{user.email}</div>
+              <button onClick={handleLogout} style={{ background: "none", border: "none", color: "var(--signal)", cursor: "pointer", fontSize: 12 }}>Logout</button>
+            </div>
+          ) : (
+            <button onClick={() => setShowAuthModal(true)} className="btn-secondary" style={{ padding: "4px 12px", fontSize: 12 }}>
+              Sign In
+            </button>
+          )}
         </div>
       </header>
 
+      {showAuthModal && (
+        <AuthModal 
+          onClose={() => setShowAuthModal(false)} 
+          onLoginSuccess={handleLoginSuccess} 
+        />
+      )}
+
       <main style={{ maxWidth: 900, margin: "0 auto" }}>
         {/* Progress bar — only shown when a session is active */}
-        {session && <ProgressBar currentStep={currentStep} />}
+        {session && <ProgressBar currentStep={currentStep} t={t} />}
 
         {/* Error display */}
         {error && (
@@ -265,14 +337,24 @@ export default function App() {
         {/* ========== Step 4: Cart / Confirmation ========== */}
         {(status === "awaiting_confirmation" || status === "confirmed") && session.cart && (
           <div className="slide-up" style={{ display: "grid", gridTemplateColumns: "1.3fr 1fr", gap: 20 }}>
-            <CartConfirm
-              cart={session.cart}
-              chosenFlight={session.chosen_flight}
-              chosenHotel={session.chosen_hotel}
-              status={session.status}
-              onConfirm={handleConfirm}
-              loading={loading}
-            />
+            <div>
+              <CartConfirm
+                cart={session.cart}
+                chosenFlight={session.chosen_flight}
+                chosenHotel={session.chosen_hotel}
+                status={session.status}
+                onConfirm={handleConfirm}
+                loading={loading}
+              />
+              <ComponentSwapper 
+                packageId="pkg_2d89ae17" 
+                budgetCap={session.budget_cap}
+                runningTotal={session.running_total}
+                onTotalChange={(newTotal) => {
+                  setSession(prev => ({ ...prev, running_total: newTotal }));
+                }}
+              />
+            </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               <CostLedger
                 runningTotal={session.running_total}

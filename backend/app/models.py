@@ -14,6 +14,7 @@ class StartSessionRequest(BaseModel):
     travelers: int = 1
     budget_cap: Optional[float] = None
     currency: str = "INR"
+    preferred_languages: Optional[str] = None
 
 
 class SelectionRequest(BaseModel):
@@ -43,3 +44,15 @@ class SessionResponse(BaseModel):
     negotiation_options: list[str] = []
     cart: Optional[dict[str, Any]] = None
     clarifying_question: Optional[str] = None
+
+
+class GuideMatchResponse(BaseModel):
+    count: int
+    from_date: str
+    to_date: str
+    guides: list[dict[str, Any]]
+
+
+class PackageResponse(BaseModel):
+    count: int
+    packages: list[dict[str, Any]]

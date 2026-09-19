@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useT } from "../i18n.js";
 
 const field = {
   width: "100%",
@@ -21,6 +22,7 @@ const label = {
 };
 
 export default function IntakeForm({ onSubmit, loading }) {
+  const { lang, t } = useT();
   const [form, setForm] = useState({
     goal: "3-day Goa trip, relaxed pace, love beaches and seafood",
     origin: "DEL",
@@ -59,20 +61,20 @@ export default function IntakeForm({ onSubmit, loading }) {
       return;
     }
     
-    onSubmit({ ...form, travelers, budget_cap: cap });
+    
+    onSubmit({ ...form, travelers, budget_cap: cap, preferred_languages: lang });
   };
 
   return (
     <div className="panel" style={{ padding: 28, maxWidth: 560 }}>
       <div style={{ fontFamily: "var(--font-display)", fontSize: 26, marginBottom: 4 }}>
-        State your goal.
+        {t("form.goal")}
       </div>
       <div className="dim" style={{ fontSize: 14, marginBottom: 22, lineHeight: 1.5 }}>
-        The agent will show you its plan before it acts, search real tools, and
-        never cross the budget you set below without asking you first.
+        {t("form.goal_desc")}
       </div>
 
-      <label style={label}>Trip goal</label>
+      <label style={label}>{t("form.trip_goal")}</label>
       <textarea
         style={{ ...field, minHeight: 60, marginBottom: 16, fontFamily: "var(--font-body)" }}
         value={form.goal}
@@ -81,27 +83,27 @@ export default function IntakeForm({ onSubmit, loading }) {
 
       <div className="intake-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
         <div>
-          <label style={label}>Origin (IATA)</label>
+          <label style={label}>{t("form.origin")}</label>
           <input style={field} value={form.origin} onChange={set("origin")} />
         </div>
         <div>
-          <label style={label}>Destination (IATA)</label>
+          <label style={label}>{t("form.destination")}</label>
           <input style={field} value={form.destination} onChange={set("destination")} />
         </div>
         <div>
-          <label style={label}>Depart</label>
+          <label style={label}>{t("form.depart")}</label>
           <input type="date" style={field} value={form.depart_date} onChange={set("depart_date")} />
         </div>
         <div>
-          <label style={label}>Return</label>
+          <label style={label}>{t("form.return")}</label>
           <input type="date" style={field} value={form.return_date} onChange={set("return_date")} />
         </div>
         <div>
-          <label style={label}>Travelers</label>
+          <label style={label}>{t("form.travelers")}</label>
           <input type="number" min="1" style={field} value={form.travelers} onChange={set("travelers")} />
         </div>
         <div>
-          <label style={label}>Budget cap (INR)</label>
+          <label style={label}>{t("form.budget")}</label>
           <input type="number" style={field} value={form.budget_cap} onChange={set("budget_cap")} />
         </div>
       </div>
@@ -126,7 +128,7 @@ export default function IntakeForm({ onSubmit, loading }) {
           fontSize: 14,
         }}
       >
-        {loading ? "Planning…" : "Send the agent to work →"}
+        {loading ? t("form.planning") : t("form.submit")}
       </button>
     </div>
   );

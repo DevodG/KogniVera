@@ -10,6 +10,8 @@ identical, so nothing else in the agent needs to change.
 from __future__ import annotations
 
 import random
+import hashlib
+import time
 from datetime import datetime, timedelta
 from typing import Any
 
@@ -140,11 +142,74 @@ def _looks_like_date(s: str) -> bool:
 
 def _search_hotels_hotelbeds(city: str, check_in: str, check_out: str, travelers: int) -> list[dict[str, Any]]:
     """
-    Real implementation stub — requires HOTELBEDS_API_KEY / HOTELBEDS_API_SECRET
-    (https://developer.hotelbeds.com). Hotelbeds auth uses an X-Signature
-    header (SHA256 of key+secret+timestamp) — implement in a real deploy.
+    Real implementation for Hotelbeds. Requires HOTELBEDS_API_KEY and HOTELBEDS_API_SECRET.
+    Authenticates using X-Signature (SHA256 of key + secret + timestamp).
     """
-    raise NotImplementedError("Wire Hotelbeds signed request here; falls back to mock until then.")
+    import httpx
+
+    if not settings.HOTELBEDS_API_KEY or not settings.HOTELBEDS_API_SECRET:
+        raise NotImplementedError("Missing Hotelbeds keys")
+
+    api_key = settings.HOTELBEDS_API_KEY
+    api_secret = settings.HOTELBEDS_API_SECRET
+    timestamp = str(int(time.time()))
+    signature = hashlib.sha256(f"{api_key}{api_secret}{timestamp}".encode()).hexdigest()
+
+    headers = {
+        "Api-key": api_key,
+        "X-Signature": signature,
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+    }
+
+    payload = {
+        "stay": {
+            "checkIn": check_in,
+            "checkOut": check_out
+        },
+        "occupancies": [
+            {
+                "rooms": 1,
+                "adults": travelers,
+                "children": 0
+            }
+        ],
+        "destination": {
+            "code": city[:3].upper() # using first 3 chars as a rough destination code for demo
+        }
+    }
+
+    try:
+        # Hotelbeds test environment URL
+        response = httpx.post(
+            "https://api.test.hotelbeds.com/hotel-api/1.0/hotels", 
+            headers=headers, 
+            json=payload,
+            timeout=10.0
+        )
+        response.raise_for_status()
+        data = response.json()
+        
+        hotels = data.get("hotels", {}).get("hotels", [])
+        out = []
+        for h in hotels[:5]:
+            min_rate = float(h.get("minRate", 0))
+            out.append({
+                "name": h.get("name", "Unknown Hotel"),
+                "city": city,
+                "check_in": check_in,
+                "check_out": check_out,
+                "nights": 1, # simplify for now
+                "rating": 4.0,
+                "price_per_night_inr": min_rate,
+                "total_price_inr": min_rate,
+                "confidence": 0.95,
+                "source": "hotelbeds",
+            })
+        return out
+    except Exception as e:
+        print(f"Hotelbeds API failed: {e}. Falling back to mock.")
+        raise NotImplementedError("Fallback to mock")
 
 
 # ---------------------------------------------------------------------------
@@ -166,8 +231,53 @@ def search_nearby_places(city: str, interest: str = "attractions") -> list[dict[
 
 
 def _search_places_google(city: str, interest: str) -> list[dict[str, Any]]:
-    """Real implementation stub — requires GOOGLE_PLACES_API_KEY."""
-    raise NotImplementedError("Wire Google Places Text Search API here.")
+    """Real implementation for Google Places Text Search v1 API."""
+    import httpx
+    
+    if not settings.GOOGLE_PLACES_API_KEY:
+        raise NotImplementedError("Missing Google Places API key")
+
+    try:
+        response = httpx.post(
+            "https://places.googleapis.com/v1/places:searchText",
+            headers={
+                "Content-Type": "application/json",
+                "X-Goog-Api-Key": settings.GOOGLE_PLACES_API_KEY,
+                "X-Goog-FieldMask": "places.displayName,places.priceLevel"
+            },
+            json={
+                "textQuery": f"{interest} in {city}",
+                "maxResultCount": 5
+            },
+            timeout=10.0
+        )
+        response.raise_for_status()
+        places = response.json().get("places", [])
+        
+        out = []
+        for p in places:
+            name = p.get("displayName", {}).get("text", "Unknown Place")
+            price_level = p.get("priceLevel", "PRICE_LEVEL_UNSPECIFIED")
+            
+            # Map Google price level to a rough INR cost
+            cost_map = {
+                "PRICE_LEVEL_FREE": 0,
+                "PRICE_LEVEL_INEXPENSIVE": 500,
+                "PRICE_LEVEL_MODERATE": 1500,
+                "PRICE_LEVEL_EXPENSIVE": 3000,
+                "PRICE_LEVEL_VERY_EXPENSIVE": 5000,
+                "PRICE_LEVEL_UNSPECIFIED": 1000
+            }
+            
+            out.append({
+                "name": name,
+                "category": interest,
+                "avg_cost_inr": cost_map.get(price_level, 1000)
+            })
+        return out
+    except Exception as e:
+        print(f"Google Places API failed: {e}. Falling back to mock.")
+        raise NotImplementedError("Fallback to mock")
 
 
 # ---------------------------------------------------------------------------

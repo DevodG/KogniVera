@@ -32,4 +32,19 @@ export const api = {
       body: JSON.stringify(payload),
     }),
   confirm: (id) => request(`/session/${id}/confirm`, { method: "POST" }),
+  matchGuides: (params) => {
+    const qs = new URLSearchParams(params).toString();
+    return request(`/guides/match?${qs}`);
+  },
+  getComponents: (packageId) => request(`/packages/${packageId}/components`),
+  getAlternatives: (packageId, componentId) =>
+    request(`/packages/${packageId}/components/${componentId}/alternatives`),
+  swapComponent: (packageId, fromComponentId, toComponentId) =>
+    request(`/packages/${packageId}/swap`, {
+      method: "POST",
+      body: JSON.stringify({
+        from_component_id: fromComponentId,
+        to_component_id: toComponentId,
+      }),
+    }),
 };

@@ -75,6 +75,26 @@ class Settings(BaseSettings):
     # ---------------------------------------------------------------
     DATABASE_URL: str = "sqlite+aiosqlite:///./concierge.db"
 
+    # PackagePro read-only DB (PS-04.db)
+    # Resolved relative to the repo root (two levels up from this file)
+    PACKAGEPRO_DB_PATH: str = str(
+        Path(__file__).resolve().parent.parent.parent / "PackagePro" / "data" / "PS-04.db"
+    )
+
+    # ---------------------------------------------------------------
+    # Auth (JWT)
+    # ---------------------------------------------------------------
+    JWT_SECRET: str = "CHANGE_ME_IN_PRODUCTION_32_CHAR_MINIMUM"
+    JWT_ALGORITHM: str = "HS256"
+    JWT_EXPIRE_HOURS: int = 24
+
+    # ---------------------------------------------------------------
+    # Payment (optional — mocked until keys are set)
+    # ---------------------------------------------------------------
+    STRIPE_SECRET_KEY: str = ""
+    RAZORPAY_KEY_ID: str = ""
+    RAZORPAY_KEY_SECRET: str = ""
+
     # ---------------------------------------------------------------
     # App
     # ---------------------------------------------------------------
