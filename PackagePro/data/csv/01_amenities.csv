@@ -1,0 +1,61 @@
+amenity_id,code,label,amenity_group,icon_hint,updated_at
+amn_fdb40b8d,free_wifi,Free Wi-Fi,connectivity,free,2026-08-18T10:00:00+05:30
+amn_35fe073c,high_speed_wifi,High-speed Wi-Fi,connectivity,high,2026-08-18T10:00:00+05:30
+amn_ddb15d0d,work_desk,Work desk,business,work,2026-08-18T10:00:00+05:30
+amn_e53b2ad3,meeting_room,Meeting room,business,meeting,2026-08-18T10:00:00+05:30
+amn_c5da0dfc,business_centre,Business centre,business,business,2026-08-18T10:00:00+05:30
+amn_f74ad76b,printer_access,Printer access,business,printer,2026-08-18T10:00:00+05:30
+amn_3b3cfd8b,swimming_pool,Swimming pool,wellness,swimming,2026-08-18T10:00:00+05:30
+amn_7f076f1d,infinity_pool,Infinity pool,wellness,infinity,2026-08-18T10:00:00+05:30
+amn_0aa5eef9,spa,Spa,wellness,spa,2026-08-18T10:00:00+05:30
+amn_6b3dbdd5,ayurvedic_spa,Ayurvedic spa,wellness,ayurvedic,2026-08-18T10:00:00+05:30
+amn_a9c2e7f7,gym,Fitness centre,wellness,gym,2026-08-18T10:00:00+05:30
+amn_86167843,yoga_deck,Yoga deck,wellness,yoga,2026-08-18T10:00:00+05:30
+amn_8085a200,sauna,Sauna,wellness,sauna,2026-08-18T10:00:00+05:30
+amn_48f09670,steam_room,Steam room,wellness,steam,2026-08-18T10:00:00+05:30
+amn_b586f4b6,hot_tub,Hot tub,wellness,hot,2026-08-18T10:00:00+05:30
+amn_6e3791c8,massage_service,In-room massage,wellness,massage,2026-08-18T10:00:00+05:30
+amn_e50effef,restaurant,Restaurant,food_beverage,restaurant,2026-08-18T10:00:00+05:30
+amn_83f80abf,multi_cuisine_restaurant,Multi-cuisine restaurant,food_beverage,multi,2026-08-18T10:00:00+05:30
+amn_9d419789,rooftop_bar,Rooftop bar,food_beverage,rooftop,2026-08-18T10:00:00+05:30
+amn_6b7b205c,coffee_shop,Coffee shop,food_beverage,coffee,2026-08-18T10:00:00+05:30
+amn_aa21d3e3,room_service_24h,24-hour room service,food_beverage,room,2026-08-18T10:00:00+05:30
+amn_f1c70f04,breakfast_buffet,Breakfast buffet,food_beverage,breakfast,2026-08-18T10:00:00+05:30
+amn_702292f3,vegetarian_kitchen,Pure vegetarian kitchen,food_beverage,vegetarian,2026-08-18T10:00:00+05:30
+amn_5738f1cd,jain_food,Jain food available,food_beverage,jain,2026-08-18T10:00:00+05:30
+amn_a01818bd,halal_kitchen,Halal kitchen,food_beverage,halal,2026-08-18T10:00:00+05:30
+amn_e3103f6e,in_room_kettle,Tea/coffee maker,food_beverage,in,2026-08-18T10:00:00+05:30
+amn_cad0c333,mini_bar,Mini bar,food_beverage,mini,2026-08-18T10:00:00+05:30
+amn_864b82ad,bbq_area,Barbecue area,food_beverage,bbq,2026-08-18T10:00:00+05:30
+amn_b62ec86d,kids_club,Kids' club,family,kids,2026-08-18T10:00:00+05:30
+amn_989b97b0,babysitting,Babysitting,family,babysitting,2026-08-18T10:00:00+05:30
+amn_097715f3,cribs_available,Cribs available,family,cribs,2026-08-18T10:00:00+05:30
+amn_5f419901,family_rooms,Family rooms,family,family,2026-08-18T10:00:00+05:30
+amn_7d92c0fa,play_area,Children's play area,family,play,2026-08-18T10:00:00+05:30
+amn_3167d8f9,kids_pool,Children's pool,family,kids,2026-08-18T10:00:00+05:30
+amn_4690aa77,step_free_access,Step-free access,accessibility,step,2026-08-18T10:00:00+05:30
+amn_088a3bd3,accessible_bathroom,Accessible bathroom,accessibility,accessible,2026-08-18T10:00:00+05:30
+amn_c9036e44,elevator,Elevator,accessibility,elevator,2026-08-18T10:00:00+05:30
+amn_53871212,braille_signage,Braille signage,accessibility,braille,2026-08-18T10:00:00+05:30
+amn_aab90d56,wheelchair_hire,Wheelchair on request,accessibility,wheelchair,2026-08-18T10:00:00+05:30
+amn_95603f62,hearing_loop,Hearing loop,accessibility,hearing,2026-08-18T10:00:00+05:30
+amn_855119e6,airport_shuttle,Airport shuttle,transport,airport,2026-08-18T10:00:00+05:30
+amn_e0ec6ba9,free_parking,Free parking,transport,free,2026-08-18T10:00:00+05:30
+amn_6b2c91c4,valet_parking,Valet parking,transport,valet,2026-08-18T10:00:00+05:30
+amn_d096bc01,ev_charging,EV charging,transport,ev,2026-08-18T10:00:00+05:30
+amn_04903ad0,car_rental_desk,Car rental desk,transport,car,2026-08-18T10:00:00+05:30
+amn_23d9dfe3,bicycle_hire,Bicycle hire,transport,bicycle,2026-08-18T10:00:00+05:30
+amn_866070f8,shuttle_to_centre,Shuttle to city centre,transport,shuttle,2026-08-18T10:00:00+05:30
+amn_fa6b283e,luggage_storage,Luggage storage,transport,luggage,2026-08-18T10:00:00+05:30
+amn_7b2de8e7,garden,Garden,outdoor,garden,2026-08-18T10:00:00+05:30
+amn_df266b70,terrace,Terrace,outdoor,terrace,2026-08-18T10:00:00+05:30
+amn_d90e6bd1,beach_access,Direct beach access,outdoor,beach,2026-08-18T10:00:00+05:30
+amn_81dbdc6e,lake_view,Lake view,outdoor,lake,2026-08-18T10:00:00+05:30
+amn_d566dd5c,mountain_view,Mountain view,outdoor,mountain,2026-08-18T10:00:00+05:30
+amn_509e6855,bonfire_area,Bonfire area,outdoor,bonfire,2026-08-18T10:00:00+05:30
+amn_f133f52a,trekking_desk,Trekking desk,outdoor,trekking,2026-08-18T10:00:00+05:30
+amn_12210383,birdwatching_deck,Birdwatching deck,outdoor,birdwatching,2026-08-18T10:00:00+05:30
+amn_655d5165,air_conditioning,Air conditioning,connectivity,air,2026-08-18T10:00:00+05:30
+amn_1c1f3c38,smart_tv,Smart TV,connectivity,smart,2026-08-18T10:00:00+05:30
+amn_10f24325,power_backup,Full power backup,connectivity,power,2026-08-18T10:00:00+05:30
+amn_5fb5d136,laundry_service,Laundry service,connectivity,laundry,2026-08-18T10:00:00+05:30
