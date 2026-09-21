@@ -1,4 +1,4 @@
-import { useT } from "../i18n.js";
+import { useT } from "../i18n.jsx";
 
 export default function LanguageSwitcher() {
   const { lang, setLang, t } = useT();

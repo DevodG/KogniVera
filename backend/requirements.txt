@@ -18,6 +18,10 @@ aiosqlite==0.20.0
 amadeus==11.0.0          # flights/hotels (Amadeus for Developers, free self-service tier)
 httpx==0.27.2            # generic HTTP client, used for any REST integration (Skyscanner/Serper/etc.)
 
+# --- Authentication & Security ---
+python-jose[cryptography]==3.3.0  # JWT token handling
+passlib[bcrypt]==1.7.4            # password hashing
+
 # --- Budget guardrail ---
 # AgentBudget (open-source "ulimit for AI agents") — install from GitHub, not yet on PyPI:
 # pip install git+https://github.com/AgentBudget/agentbudget.git

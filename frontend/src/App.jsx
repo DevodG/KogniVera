@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api } from "./api/client.js";
 import IntakeForm from "./components/IntakeForm.jsx";
 import PlanTimeline from "./components/PlanTimeline.jsx";
@@ -12,7 +12,7 @@ import PlacesGrid from "./components/PlacesGrid.jsx";
 import LanguageSwitcher from "./components/LanguageSwitcher.jsx";
 import ComponentSwapper from "./components/ComponentSwapper.jsx";
 import AuthModal from "./components/AuthModal.jsx";
-import { useT } from "./i18n.js";
+import { useT } from "./i18n.jsx";
 
 // Step definitions for the progress bar
 const STEPS = [
