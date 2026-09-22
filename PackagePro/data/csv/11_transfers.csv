@@ -1,0 +1,301 @@
+transfer_id,city_id,from_label,to_label,mode,duration_minutes,distance_km,cost,currency,carbon_kg,capacity_pax,accessible,status,updated_at
+trf_ac8472c0,cty_c07454f1,Port,Business park,bus,234,117.123,391.37,INR,7.964,3,1,active,2026-08-18T10:00:00+05:30
+trf_a27e7227,cty_c07454f1,Railway station,Hill resort,auto_rickshaw,80,36.018,616.28,INR,3.458,6,1,active,2026-08-18T10:00:00+05:30
+trf_33956d22,cty_c07454f1,City centre,Hotel district,train,71,71.283,182.57,INR,2.923,4,0,active,2026-08-18T10:00:00+05:30
+trf_07334f37,cty_c07454f1,Bus terminus,Beach road,ferry,152,53.201,465.61,INR,6.118,4,1,active,2026-08-18T10:00:00+05:30
+trf_e2fcd45d,cty_c07454f1,Airport,Old town,train,31,31.403,102.81,INR,1.288,80,1,active,2026-08-18T10:00:00+05:30
+trf_6b374279,cty_5d572c8a,Port,Hill resort,train,60,60.828,161.66,INR,2.494,6,0,active,2026-08-18T10:00:00+05:30
+trf_be5605e5,cty_5d572c8a,Port,Hill resort,auto_rickshaw,165,74.536,1232.58,INR,7.156,3,1,active,2026-08-18T10:00:00+05:30
+trf_82d525d0,cty_5d572c8a,Railway station,Old town,ferry,45,15.995,167.96,INR,1.839,40,0,active,2026-08-18T10:00:00+05:30
+trf_c6cfdeb2,cty_5d572c8a,Airport,Old town,bus,9,4.79,54.37,INR,0.326,6,0,active,2026-08-18T10:00:00+05:30
+trf_686181e3,cty_5d572c8a,City centre,Old town,ferry,53,18.887,191.10,INR,2.172,3,1,active,2026-08-18T10:00:00+05:30
+trf_084acb1b,cty_076e8e86,Railway station,Beach road,train,57,57.096,154.19,INR,2.341,40,1,active,2026-08-18T10:00:00+05:30
+trf_5b43c844,cty_076e8e86,Port,Hotel district,auto_rickshaw,260,117.041,1912.66,INR,11.236,6,1,active,2026-08-18T10:00:00+05:30
+trf_9bb23a35,cty_076e8e86,City centre,Business park,bus,42,21.218,103.65,INR,1.443,80,1,active,2026-08-18T10:00:00+05:30
+trf_dbd00165,cty_076e8e86,Airport,Hill resort,ferry,266,93.37,786.96,INR,10.738,80,1,active,2026-08-18T10:00:00+05:30
+trf_fe657cbf,cty_076e8e86,Bus terminus,Old town,auto_rickshaw,225,101.387,1662.19,INR,9.733,6,0,active,2026-08-18T10:00:00+05:30
+trf_5d9083ce,cty_10cbee86,Airport,Hotel district,ferry,89,31.406,291.25,INR,3.612,4,0,active,2026-08-18T10:00:00+05:30
+trf_eb21d2d2,cty_10cbee86,Airport,Beach road,ferry,172,60.508,524.07,INR,6.958,6,1,active,2026-08-18T10:00:00+05:30
+trf_d46e3695,cty_10cbee86,Port,Business park,bus,106,53.328,199.99,INR,3.626,4,0,active,2026-08-18T10:00:00+05:30
+trf_9b78466f,cty_10cbee86,Airport,Business park,auto_rickshaw,80,36.373,621.97,INR,3.492,3,0,active,2026-08-18T10:00:00+05:30
+trf_038c0713,cty_10cbee86,Railway station,Old town,train,80,80.503,201.01,INR,3.301,80,0,active,2026-08-18T10:00:00+05:30
+trf_0de63a87,cty_b43cdd57,Railway station,Hill resort,bus,22,11.392,74.18,INR,0.775,40,1,active,2026-08-18T10:00:00+05:30
+trf_d96b66dc,cty_b43cdd57,Port,Beach road,auto_rickshaw,45,20.277,364.43,INR,1.947,6,0,active,2026-08-18T10:00:00+05:30
+trf_d770c8ea,cty_b43cdd57,Railway station,Business park,auto_rickshaw,242,109.006,1784.09,INR,10.465,80,1,active,2026-08-18T10:00:00+05:30
+trf_c1f46bb1,cty_b43cdd57,City centre,Business park,auto_rickshaw,220,99.351,1629.61,INR,9.538,3,0,active,2026-08-18T10:00:00+05:30
+trf_6aae2527,cty_b43cdd57,Railway station,Hotel district,cab,21,15.247,375.44,INR,2.607,3,1,active,2026-08-18T10:00:00+05:30
+trf_0100fa98,cty_c97e6cd5,Airport,Old town,auto_rickshaw,68,30.836,533.38,INR,2.96,40,0,active,2026-08-18T10:00:00+05:30
+trf_bc2c79fb,cty_c97e6cd5,Bus terminus,Business park,bus,133,66.882,240.65,INR,4.548,40,0,active,2026-08-18T10:00:00+05:30
+trf_c682127d,cty_c97e6cd5,Bus terminus,Hotel district,auto_rickshaw,132,59.844,997.51,INR,5.745,3,1,active,2026-08-18T10:00:00+05:30
+trf_26ff986c,cty_c97e6cd5,Port,Hotel district,cab,147,103.451,2315.93,INR,17.69,4,1,active,2026-08-18T10:00:00+05:30
+trf_3a2fa4fc,cty_c97e6cd5,City centre,Hill resort,ferry,106,37.125,337.00,INR,4.269,40,0,active,2026-08-18T10:00:00+05:30
+trf_848245df,cty_5698a7ab,Railway station,Hill resort,train,86,86.013,212.03,INR,3.527,80,0,active,2026-08-18T10:00:00+05:30
+trf_b95a8978,cty_5698a7ab,Airport,Old town,ferry,68,24.019,232.16,INR,2.762,3,0,active,2026-08-18T10:00:00+05:30
+trf_302e937e,cty_5698a7ab,Bus terminus,Old town,bus,161,80.661,281.98,INR,5.485,40,0,active,2026-08-18T10:00:00+05:30
+trf_d90804b9,cty_5698a7ab,Port,Old town,train,43,43.586,127.17,INR,1.787,3,1,active,2026-08-18T10:00:00+05:30
+trf_3b7f5019,cty_5698a7ab,Port,Hill resort,bus,169,84.632,293.90,INR,5.755,4,0,active,2026-08-18T10:00:00+05:30
+trf_f0394b7e,cty_0b92e2e7,Port,Hotel district,ferry,52,18.467,187.74,INR,2.124,40,0,active,2026-08-18T10:00:00+05:30
+trf_cbf47319,cty_0b92e2e7,Railway station,Hotel district,auto_rickshaw,50,22.802,404.83,INR,2.189,4,1,active,2026-08-18T10:00:00+05:30
+trf_0d6363b9,cty_0b92e2e7,Railway station,Business park,ferry,198,69.557,596.46,INR,7.999,6,0,active,2026-08-18T10:00:00+05:30
+trf_2fff2c80,cty_0b92e2e7,Airport,Beach road,ferry,116,40.849,366.79,INR,4.698,4,0,active,2026-08-18T10:00:00+05:30
+trf_6942b22c,cty_0b92e2e7,Railway station,Beach road,auto_rickshaw,136,61.378,1022.05,INR,5.892,4,0,active,2026-08-18T10:00:00+05:30
+trf_0fb843bb,cty_0d062a51,Railway station,Business park,bus,27,13.982,81.95,INR,0.951,4,0,active,2026-08-18T10:00:00+05:30
+trf_96f0cba5,cty_0d062a51,Railway station,Hill resort,ferry,38,13.431,147.45,INR,1.545,40,1,active,2026-08-18T10:00:00+05:30
+trf_b9e51ed9,cty_0d062a51,Airport,Beach road,bus,110,55.226,205.68,INR,3.755,6,1,active,2026-08-18T10:00:00+05:30
+trf_9cc4dd79,cty_0d062a51,Port,Hotel district,auto_rickshaw,80,36.228,619.64,INR,3.478,80,0,active,2026-08-18T10:00:00+05:30
+trf_16e21a45,cty_0d062a51,Airport,Hill resort,auto_rickshaw,127,57.321,957.13,INR,5.503,6,0,active,2026-08-18T10:00:00+05:30
+trf_92f71b6a,cty_32e8e65c,City centre,Business park,ferry,96,33.875,311.00,INR,3.896,3,1,active,2026-08-18T10:00:00+05:30
+trf_48a949e7,cty_32e8e65c,Airport,Hotel district,auto_rickshaw,151,67.994,1127.90,INR,6.527,40,1,active,2026-08-18T10:00:00+05:30
+trf_1c92bf33,cty_32e8e65c,Bus terminus,Hotel district,train,18,18.755,77.51,INR,0.769,6,1,active,2026-08-18T10:00:00+05:30
+trf_fbc61763,cty_32e8e65c,Airport,Hill resort,train,110,110.725,261.45,INR,4.54,4,0,active,2026-08-18T10:00:00+05:30
+trf_539d3843,cty_32e8e65c,Airport,Business park,cab,55,39.129,900.83,INR,6.691,3,0,active,2026-08-18T10:00:00+05:30
+trf_60d9b568,cty_9327d518,Railway station,Hill resort,ferry,337,118.127,985.02,INR,13.585,80,0,active,2026-08-18T10:00:00+05:30
+trf_891a9747,cty_9327d518,Railway station,Hill resort,bus,141,70.831,252.49,INR,4.817,4,0,active,2026-08-18T10:00:00+05:30
+trf_9ffdd7fe,cty_9327d518,Bus terminus,Hill resort,cab,79,55.717,1265.77,INR,9.528,6,0,active,2026-08-18T10:00:00+05:30
+trf_7c17cb9e,cty_9327d518,Railway station,Business park,cab,56,39.893,917.66,INR,6.822,6,1,active,2026-08-18T10:00:00+05:30
+trf_6d032de5,cty_9327d518,City centre,Business park,ferry,225,79.009,672.07,INR,9.086,3,1,active,2026-08-18T10:00:00+05:30
+trf_3afd9655,cty_d35a9652,Airport,Hill resort,train,4,4.086,48.17,INR,0.168,3,0,active,2026-08-18T10:00:00+05:30
+trf_2fbaea94,cty_d35a9652,Bus terminus,Beach road,cab,91,63.97,1447.34,INR,10.939,4,1,active,2026-08-18T10:00:00+05:30
+trf_d9aa1a0f,cty_d35a9652,Airport,Business park,ferry,214,75.075,640.60,INR,8.634,80,1,active,2026-08-18T10:00:00+05:30
+trf_6b5b934f,cty_d35a9652,Bus terminus,Hotel district,ferry,72,25.264,242.12,INR,2.905,3,0,active,2026-08-18T10:00:00+05:30
+trf_e3a82f9f,cty_d35a9652,Railway station,Beach road,train,46,46.275,132.55,INR,1.897,4,0,active,2026-08-18T10:00:00+05:30
+trf_57bbc75c,cty_0d9ab6ff,Bus terminus,Business park,ferry,251,88.061,744.49,INR,10.127,3,1,active,2026-08-18T10:00:00+05:30
+trf_bbfd6082,cty_0d9ab6ff,City centre,Hotel district,auto_rickshaw,181,81.592,1345.47,INR,7.833,6,1,active,2026-08-18T10:00:00+05:30
+trf_da429db7,cty_0d9ab6ff,Port,Old town,train,59,59.283,158.57,INR,2.431,4,0,active,2026-08-18T10:00:00+05:30
+trf_45f83133,cty_0d9ab6ff,Railway station,Old town,auto_rickshaw,133,59.917,998.68,INR,5.752,4,1,active,2026-08-18T10:00:00+05:30
+trf_6772b0ab,cty_0d9ab6ff,Port,Business park,train,115,115.315,270.63,INR,4.728,3,1,active,2026-08-18T10:00:00+05:30
+trf_013e6f6d,cty_aa759717,City centre,Old town,bus,76,38.189,154.57,INR,2.597,40,0,active,2026-08-18T10:00:00+05:30
+trf_0023e3fc,cty_aa759717,Railway station,Hotel district,ferry,79,27.709,261.67,INR,3.187,40,0,active,2026-08-18T10:00:00+05:30
+trf_cf94d181,cty_aa759717,City centre,Hill resort,auto_rickshaw,42,18.924,342.79,INR,1.817,3,0,active,2026-08-18T10:00:00+05:30
+trf_325adae8,cty_aa759717,Airport,Business park,cab,41,29.139,681.05,INR,4.983,40,0,active,2026-08-18T10:00:00+05:30
+trf_6c81caca,cty_aa759717,Railway station,Business park,cab,88,61.941,1402.71,INR,10.592,40,1,active,2026-08-18T10:00:00+05:30
+trf_fa25b8a1,cty_828a7777,Bus terminus,Old town,train,42,42.887,125.77,INR,1.758,4,1,active,2026-08-18T10:00:00+05:30
+trf_d1888ade,cty_828a7777,Railway station,Business park,bus,32,16.364,89.09,INR,1.113,4,0,active,2026-08-18T10:00:00+05:30
+trf_25bee7ae,cty_828a7777,Bus terminus,Business park,cab,100,70.269,1585.93,INR,12.016,3,0,active,2026-08-18T10:00:00+05:30
+trf_f144ffcd,cty_828a7777,Airport,Hotel district,cab,170,119.591,2671.01,INR,20.45,6,1,active,2026-08-18T10:00:00+05:30
+trf_bf001da7,cty_828a7777,Bus terminus,Old town,auto_rickshaw,199,89.902,1478.43,INR,8.631,40,0,active,2026-08-18T10:00:00+05:30
+trf_7f6df642,cty_95e7c8ca,City centre,Beach road,bus,176,88.038,304.11,INR,5.987,40,0,active,2026-08-18T10:00:00+05:30
+trf_a660cda3,cty_95e7c8ca,Airport,Business park,bus,153,76.552,269.66,INR,5.206,6,0,active,2026-08-18T10:00:00+05:30
+trf_049cb047,cty_95e7c8ca,Bus terminus,Hotel district,ferry,131,46.138,409.11,INR,5.306,6,0,active,2026-08-18T10:00:00+05:30
+trf_48951290,cty_95e7c8ca,Railway station,Beach road,cab,44,31.286,728.28,INR,5.35,3,0,active,2026-08-18T10:00:00+05:30
+trf_5c0b3cca,cty_95e7c8ca,Airport,Hotel district,auto_rickshaw,248,111.799,1828.79,INR,10.733,40,1,active,2026-08-18T10:00:00+05:30
+trf_15b5cf2c,cty_621f4a84,Bus terminus,Hill resort,auto_rickshaw,42,18.994,343.91,INR,1.823,80,0,active,2026-08-18T10:00:00+05:30
+trf_e4ec97c1,cty_621f4a84,Railway station,Business park,bus,76,38.141,154.42,INR,2.594,80,0,active,2026-08-18T10:00:00+05:30
+trf_54b2a860,cty_621f4a84,Port,Beach road,cab,153,107.408,2402.97,INR,18.367,40,1,active,2026-08-18T10:00:00+05:30
+trf_eb5c9e10,cty_621f4a84,City centre,Old town,train,48,48.079,136.16,INR,1.971,4,1,active,2026-08-18T10:00:00+05:30
+trf_ac078964,cty_621f4a84,City centre,Old town,bus,131,65.938,237.81,INR,4.484,4,0,active,2026-08-18T10:00:00+05:30
+trf_00c37307,cty_f29656ff,Bus terminus,Hill resort,ferry,136,47.609,420.87,INR,5.475,80,1,active,2026-08-18T10:00:00+05:30
+trf_b486e35a,cty_f29656ff,Airport,Hotel district,cab,138,96.887,2171.52,INR,16.568,4,1,active,2026-08-18T10:00:00+05:30
+trf_d110eacf,cty_f29656ff,City centre,Hill resort,cab,122,85.606,1923.33,INR,14.639,3,0,active,2026-08-18T10:00:00+05:30
+trf_ef5254fe,cty_f29656ff,Bus terminus,Beach road,cab,23,16.602,405.25,INR,2.839,40,1,active,2026-08-18T10:00:00+05:30
+trf_b4179b7c,cty_f29656ff,City centre,Beach road,cab,115,80.728,1816.01,INR,13.804,3,0,active,2026-08-18T10:00:00+05:30
+trf_3c7b36fd,cty_cfec17b6,Railway station,Beach road,bus,45,22.85,108.55,INR,1.554,3,0,active,2026-08-18T10:00:00+05:30
+trf_5ea0f410,cty_cfec17b6,Bus terminus,Beach road,cab,30,21.01,502.21,INR,3.593,3,0,active,2026-08-18T10:00:00+05:30
+trf_56c514ed,cty_cfec17b6,Airport,Old town,cab,65,45.558,1042.29,INR,7.79,6,1,active,2026-08-18T10:00:00+05:30
+trf_199e4847,cty_cfec17b6,Bus terminus,Business park,auto_rickshaw,12,5.459,127.35,INR,0.524,6,0,active,2026-08-18T10:00:00+05:30
+trf_8bac4160,cty_cfec17b6,Airport,Business park,cab,35,24.578,580.72,INR,4.203,4,1,active,2026-08-18T10:00:00+05:30
+trf_5647a43f,cty_caf3c1ee,Airport,Hotel district,train,60,60.497,160.99,INR,2.48,3,0,active,2026-08-18T10:00:00+05:30
+trf_48fcff6f,cty_caf3c1ee,Bus terminus,Old town,ferry,277,96.967,815.73,INR,11.151,40,1,active,2026-08-18T10:00:00+05:30
+trf_0e218d77,cty_caf3c1ee,Port,Business park,bus,178,89.187,307.56,INR,6.065,40,0,active,2026-08-18T10:00:00+05:30
+trf_85820370,cty_caf3c1ee,City centre,Beach road,bus,27,13.922,81.77,INR,0.947,80,1,active,2026-08-18T10:00:00+05:30
+trf_50cbcee6,cty_caf3c1ee,Railway station,Old town,auto_rickshaw,31,14.061,264.98,INR,1.35,40,1,active,2026-08-18T10:00:00+05:30
+trf_aeb836c9,cty_43d0a650,Bus terminus,Beach road,ferry,176,61.733,533.86,INR,7.099,80,1,active,2026-08-18T10:00:00+05:30
+trf_7feb09f5,cty_43d0a650,Railway station,Old town,ferry,120,42.069,376.55,INR,4.838,80,0,active,2026-08-18T10:00:00+05:30
+trf_4669ea43,cty_43d0a650,City centre,Business park,bus,53,26.73,120.19,INR,1.818,3,0,active,2026-08-18T10:00:00+05:30
+trf_1f0b52db,cty_43d0a650,Airport,Business park,cab,31,22.076,525.68,INR,3.775,4,0,active,2026-08-18T10:00:00+05:30
+trf_e832d78a,cty_43d0a650,Airport,Business park,auto_rickshaw,206,92.882,1526.12,INR,8.917,6,0,active,2026-08-18T10:00:00+05:30
+trf_a4028384,cty_17b8ef2f,Railway station,Beach road,bus,237,118.76,396.28,INR,8.076,40,0,active,2026-08-18T10:00:00+05:30
+trf_05c09c8a,cty_17b8ef2f,Bus terminus,Business park,bus,31,15.601,86.80,INR,1.061,80,1,active,2026-08-18T10:00:00+05:30
+trf_40ca467e,cty_17b8ef2f,City centre,Beach road,train,86,86.895,213.79,INR,3.563,80,1,active,2026-08-18T10:00:00+05:30
+trf_89dcc297,cty_17b8ef2f,Airport,Beach road,ferry,133,46.826,414.61,INR,5.385,6,0,active,2026-08-18T10:00:00+05:30
+trf_5b469d8c,cty_17b8ef2f,Railway station,Beach road,auto_rickshaw,79,35.825,613.21,INR,3.439,4,0,active,2026-08-18T10:00:00+05:30
+trf_d8e40c8f,cty_8fc1539e,Port,Beach road,ferry,210,73.779,630.23,INR,8.485,6,0,active,2026-08-18T10:00:00+05:30
+trf_c76dedae,cty_8fc1539e,Railway station,Hill resort,train,107,107.95,255.90,INR,4.426,3,0,active,2026-08-18T10:00:00+05:30
+trf_1051b821,cty_8fc1539e,Airport,Hill resort,train,57,57.198,154.40,INR,2.345,4,1,active,2026-08-18T10:00:00+05:30
+trf_ff944a97,cty_8fc1539e,Port,Hill resort,bus,75,37.693,153.08,INR,2.563,40,0,active,2026-08-18T10:00:00+05:30
+trf_0bde285f,cty_8fc1539e,City centre,Beach road,ferry,246,86.343,730.74,INR,9.929,80,0,active,2026-08-18T10:00:00+05:30
+trf_c45ed036,cty_bbb31d67,Airport,Hotel district,cab,134,94.109,2110.40,INR,16.093,6,1,active,2026-08-18T10:00:00+05:30
+trf_05db5018,cty_bbb31d67,Railway station,Hill resort,ferry,23,8.255,106.04,INR,0.949,3,1,active,2026-08-18T10:00:00+05:30
+trf_6c8d4b16,cty_bbb31d67,Railway station,Hill resort,ferry,188,65.911,567.29,INR,7.58,6,0,active,2026-08-18T10:00:00+05:30
+trf_88a4cf25,cty_bbb31d67,Airport,Hill resort,bus,113,56.803,210.41,INR,3.863,40,1,active,2026-08-18T10:00:00+05:30
+trf_45905c72,cty_bbb31d67,City centre,Hill resort,train,4,4.219,48.44,INR,0.173,6,0,active,2026-08-18T10:00:00+05:30
+trf_facd2912,cty_a97c33ad,Airport,Hill resort,ferry,96,33.608,308.87,INR,3.865,6,1,active,2026-08-18T10:00:00+05:30
+trf_26add781,cty_a97c33ad,Port,Hill resort,cab,137,96.544,2163.97,INR,16.509,80,0,active,2026-08-18T10:00:00+05:30
+trf_03f93391,cty_a97c33ad,Port,Hill resort,ferry,263,92.058,776.46,INR,10.587,3,0,active,2026-08-18T10:00:00+05:30
+trf_fa08662e,cty_a97c33ad,Port,Business park,cab,86,60.755,1376.60,INR,10.389,6,1,active,2026-08-18T10:00:00+05:30
+trf_c35525c3,cty_a97c33ad,Airport,Business park,ferry,102,35.868,326.94,INR,4.125,80,1,active,2026-08-18T10:00:00+05:30
+trf_80c1de33,cty_f8b75f8e,Port,Old town,cab,45,31.949,742.88,INR,5.463,80,0,active,2026-08-18T10:00:00+05:30
+trf_7700f8be,cty_f8b75f8e,Port,Business park,train,67,67.604,175.21,INR,2.772,4,1,active,2026-08-18T10:00:00+05:30
+trf_7833515a,cty_f8b75f8e,Railway station,Old town,auto_rickshaw,110,49.91,838.56,INR,4.791,80,0,active,2026-08-18T10:00:00+05:30
+trf_0067030c,cty_f8b75f8e,Bus terminus,Business park,auto_rickshaw,197,88.906,1462.50,INR,8.535,40,1,active,2026-08-18T10:00:00+05:30
+trf_ac4995bd,cty_f8b75f8e,Railway station,Business park,ferry,74,25.923,247.39,INR,2.981,3,0,active,2026-08-18T10:00:00+05:30
+trf_f9d49f71,cty_3503e391,Railway station,Hotel district,cab,139,97.6,2187.19,INR,16.69,4,0,active,2026-08-18T10:00:00+05:30
+trf_1ef50b9d,cty_3503e391,Airport,Hill resort,train,53,53.292,146.58,INR,2.185,4,1,active,2026-08-18T10:00:00+05:30
+trf_1055b58f,cty_3503e391,Railway station,Beach road,ferry,266,93.407,787.26,INR,10.742,4,0,active,2026-08-18T10:00:00+05:30
+trf_6771bd8e,cty_3503e391,Airport,Beach road,ferry,308,107.948,903.59,INR,12.414,80,0,active,2026-08-18T10:00:00+05:30
+trf_fa3f2538,cty_3503e391,Port,Business park,auto_rickshaw,181,81.499,1343.99,INR,7.824,80,0,active,2026-08-18T10:00:00+05:30
+trf_c3299da9,cty_7fc82336,Airport,Old town,cab,28,20.104,482.30,INR,3.438,80,0,active,2026-08-18T10:00:00+05:30
+trf_ca7b97e1,cty_7fc82336,Bus terminus,Hotel district,auto_rickshaw,47,21.261,380.17,INR,2.041,4,0,active,2026-08-18T10:00:00+05:30
+trf_f80c9ede,cty_7fc82336,City centre,Business park,bus,155,77.529,272.59,INR,5.272,3,0,active,2026-08-18T10:00:00+05:30
+trf_3730a188,cty_7fc82336,Airport,Hotel district,auto_rickshaw,248,111.643,1826.28,INR,10.718,40,0,active,2026-08-18T10:00:00+05:30
+trf_587e2928,cty_7fc82336,Port,Beach road,bus,196,98.339,335.02,INR,6.687,4,0,active,2026-08-18T10:00:00+05:30
+trf_6f84aa18,cty_f288c6a0,Airport,Hill resort,auto_rickshaw,242,108.991,1783.86,INR,10.463,80,0,active,2026-08-18T10:00:00+05:30
+trf_aa3a5816,cty_f288c6a0,Port,Business park,cab,75,52.701,1199.41,INR,9.012,4,1,active,2026-08-18T10:00:00+05:30
+trf_7b3b265c,cty_f288c6a0,Bus terminus,Hotel district,cab,157,110.054,2461.18,INR,18.819,6,1,active,2026-08-18T10:00:00+05:30
+trf_a12baff7,cty_f288c6a0,Railway station,Business park,cab,29,20.639,494.07,INR,3.529,6,1,active,2026-08-18T10:00:00+05:30
+trf_9863f6b2,cty_f288c6a0,Bus terminus,Business park,bus,53,26.986,120.96,INR,1.835,4,0,active,2026-08-18T10:00:00+05:30
+trf_160f7e7a,cty_7f673457,City centre,Hill resort,cab,131,92.137,2067.02,INR,15.756,4,1,active,2026-08-18T10:00:00+05:30
+trf_d0ea15c9,cty_7f673457,Port,Hill resort,ferry,187,65.762,566.10,INR,7.563,4,0,active,2026-08-18T10:00:00+05:30
+trf_97b96539,cty_7f673457,Airport,Beach road,cab,51,35.704,825.48,INR,6.105,80,0,active,2026-08-18T10:00:00+05:30
+trf_0e91938d,cty_7f673457,City centre,Hotel district,ferry,109,38.446,347.57,INR,4.421,80,0,active,2026-08-18T10:00:00+05:30
+trf_5fdecca5,cty_7f673457,Port,Old town,auto_rickshaw,134,60.476,1007.62,INR,5.806,6,1,active,2026-08-18T10:00:00+05:30
+trf_646d467e,cty_8b6b1652,Port,Hill resort,bus,203,101.651,344.95,INR,6.912,6,1,active,2026-08-18T10:00:00+05:30
+trf_1eee6fae,cty_8b6b1652,Bus terminus,Beach road,ferry,173,60.687,525.49,INR,6.979,6,0,active,2026-08-18T10:00:00+05:30
+trf_6b97eb27,cty_8b6b1652,City centre,Old town,cab,73,51.322,1169.09,INR,8.776,40,1,active,2026-08-18T10:00:00+05:30
+trf_7c9486b4,cty_8b6b1652,Airport,Hill resort,ferry,50,17.745,181.96,INR,2.041,40,0,active,2026-08-18T10:00:00+05:30
+trf_dad82647,cty_8b6b1652,Port,Hotel district,auto_rickshaw,50,22.723,403.57,INR,2.181,40,1,active,2026-08-18T10:00:00+05:30
+trf_29ec38a1,cty_34bbfdfe,Airport,Hill resort,ferry,282,98.778,830.22,INR,11.359,4,0,active,2026-08-18T10:00:00+05:30
+trf_af984173,cty_34bbfdfe,Airport,Business park,auto_rickshaw,104,46.873,789.97,INR,4.5,40,0,active,2026-08-18T10:00:00+05:30
+trf_82dbf860,cty_34bbfdfe,Bus terminus,Hill resort,cab,170,119.565,2670.44,INR,20.446,80,0,active,2026-08-18T10:00:00+05:30
+trf_2924b122,cty_34bbfdfe,Airport,Hotel district,train,67,67.082,174.16,INR,2.75,40,1,active,2026-08-18T10:00:00+05:30
+trf_573353b1,cty_34bbfdfe,City centre,Hotel district,bus,161,80.536,281.61,INR,5.476,80,1,active,2026-08-18T10:00:00+05:30
+trf_5eff2418,cty_d401ef6b,Railway station,Beach road,train,21,21.346,82.69,INR,0.875,80,0,active,2026-08-18T10:00:00+05:30
+trf_03ebf5e8,cty_d401ef6b,Bus terminus,Beach road,bus,103,51.938,195.81,INR,3.532,4,0,active,2026-08-18T10:00:00+05:30
+trf_84aca9d5,cty_d401ef6b,Bus terminus,Hotel district,cab,10,7.686,209.10,INR,1.314,40,0,active,2026-08-18T10:00:00+05:30
+trf_51e691a1,cty_d401ef6b,Railway station,Hill resort,cab,35,24.879,587.34,INR,4.254,3,0,active,2026-08-18T10:00:00+05:30
+trf_0b6ca140,cty_d401ef6b,Airport,Beach road,ferry,64,22.634,221.07,INR,2.603,3,0,active,2026-08-18T10:00:00+05:30
+trf_434ad0f8,cty_67ee7f6f,Railway station,Beach road,cab,73,51.267,1167.87,INR,8.767,4,0,active,2026-08-18T10:00:00+05:30
+trf_fb815973,cty_67ee7f6f,Airport,Old town,auto_rickshaw,154,69.525,1152.40,INR,6.674,40,0,active,2026-08-18T10:00:00+05:30
+trf_a9e67ad6,cty_67ee7f6f,Bus terminus,Beach road,cab,61,42.895,983.70,INR,7.335,80,1,active,2026-08-18T10:00:00+05:30
+trf_9df827dc,cty_67ee7f6f,Bus terminus,Business park,cab,94,66.489,1502.77,INR,11.37,6,0,active,2026-08-18T10:00:00+05:30
+trf_2dc179af,cty_67ee7f6f,Airport,Hill resort,auto_rickshaw,119,53.901,902.42,INR,5.175,40,0,active,2026-08-18T10:00:00+05:30
+trf_f06c8c64,cty_541018a9,Railway station,Beach road,auto_rickshaw,107,48.403,814.45,INR,4.647,4,0,active,2026-08-18T10:00:00+05:30
+trf_f5e5202a,cty_541018a9,City centre,Old town,train,16,16.41,72.82,INR,0.673,3,0,active,2026-08-18T10:00:00+05:30
+trf_de8b2d61,cty_541018a9,City centre,Old town,auto_rickshaw,159,71.578,1185.24,INR,6.871,80,0,active,2026-08-18T10:00:00+05:30
+trf_ac92fd41,cty_541018a9,Railway station,Beach road,train,20,20.647,81.29,INR,0.847,6,0,active,2026-08-18T10:00:00+05:30
+trf_a941674e,cty_541018a9,Port,Business park,ferry,175,61.508,532.06,INR,7.073,3,0,active,2026-08-18T10:00:00+05:30
+trf_802acfdf,cty_718f03c7,Railway station,Hotel district,bus,57,28.832,126.50,INR,1.961,3,0,active,2026-08-18T10:00:00+05:30
+trf_3b2e078a,cty_718f03c7,Bus terminus,Hill resort,cab,47,33.263,771.78,INR,5.688,80,0,active,2026-08-18T10:00:00+05:30
+trf_1a412564,cty_718f03c7,Airport,Hill resort,cab,163,114.233,2553.13,INR,19.534,40,0,active,2026-08-18T10:00:00+05:30
+trf_3b0da2a0,cty_718f03c7,Bus terminus,Old town,train,93,93.036,226.07,INR,3.814,4,1,active,2026-08-18T10:00:00+05:30
+trf_7ae527d5,cty_718f03c7,Airport,Hotel district,cab,70,49.668,1132.71,INR,8.493,6,0,active,2026-08-18T10:00:00+05:30
+trf_25f900f0,cty_7cb0b529,Port,Beach road,ferry,32,11.449,131.59,INR,1.317,3,1,active,2026-08-18T10:00:00+05:30
+trf_97eee8f8,cty_7cb0b529,Airport,Old town,bus,79,39.854,159.56,INR,2.71,4,0,active,2026-08-18T10:00:00+05:30
+trf_91c71b88,cty_7cb0b529,Port,Hill resort,cab,141,99.272,2223.98,INR,16.975,3,0,active,2026-08-18T10:00:00+05:30
+trf_13ce0104,cty_7cb0b529,Railway station,Beach road,cab,12,8.402,224.84,INR,1.437,40,0,active,2026-08-18T10:00:00+05:30
+trf_ba710794,cty_7cb0b529,City centre,Hotel district,cab,162,113.467,2536.26,INR,19.403,40,1,active,2026-08-18T10:00:00+05:30
+trf_5d608b73,cty_d4f5e3a5,Port,Hill resort,ferry,158,55.641,485.13,INR,6.399,3,1,active,2026-08-18T10:00:00+05:30
+trf_408c5e11,cty_d4f5e3a5,Port,Business park,train,95,95.411,230.82,INR,3.912,40,0,active,2026-08-18T10:00:00+05:30
+trf_c939e79e,cty_d4f5e3a5,Bus terminus,Hill resort,auto_rickshaw,231,104.174,1706.78,INR,10.001,6,0,active,2026-08-18T10:00:00+05:30
+trf_7ddbb272,cty_d4f5e3a5,Railway station,Hill resort,cab,143,100.751,2256.53,INR,17.228,80,0,active,2026-08-18T10:00:00+05:30
+trf_17b159aa,cty_d4f5e3a5,Bus terminus,Beach road,train,17,17.676,75.35,INR,0.725,40,1,active,2026-08-18T10:00:00+05:30
+trf_5fd7768a,cty_ab50efee,Railway station,Old town,bus,111,55.95,207.85,INR,3.805,40,1,active,2026-08-18T10:00:00+05:30
+trf_5b492ac5,cty_ab50efee,Airport,Old town,bus,69,34.926,144.78,INR,2.375,4,1,active,2026-08-18T10:00:00+05:30
+trf_6e207777,cty_ab50efee,Railway station,Old town,auto_rickshaw,220,99.288,1628.61,INR,9.532,40,0,active,2026-08-18T10:00:00+05:30
+trf_e272a308,cty_ab50efee,Airport,Beach road,auto_rickshaw,49,22.462,399.39,INR,2.156,80,1,active,2026-08-18T10:00:00+05:30
+trf_61303157,cty_ab50efee,City centre,Hotel district,train,43,43.536,127.07,INR,1.785,6,0,active,2026-08-18T10:00:00+05:30
+trf_30c821b6,cty_c43cfa94,Port,Beach road,ferry,296,103.856,870.85,INR,11.943,6,0,active,2026-08-18T10:00:00+05:30
+trf_edecf700,cty_c43cfa94,Port,Old town,cab,165,116.142,2595.12,INR,19.86,3,1,active,2026-08-18T10:00:00+05:30
+trf_ad3eb460,cty_c43cfa94,Airport,Beach road,bus,212,106.209,358.63,INR,7.222,3,0,active,2026-08-18T10:00:00+05:30
+trf_8b2e9a84,cty_c43cfa94,Bus terminus,Beach road,cab,93,65.636,1483.98,INR,11.224,80,1,active,2026-08-18T10:00:00+05:30
+trf_c1b68315,cty_c43cfa94,Port,Hill resort,bus,165,82.899,288.70,INR,5.637,3,1,active,2026-08-18T10:00:00+05:30
+trf_518f9474,cty_b6ccbb3b,Port,Business park,auto_rickshaw,218,98.111,1609.77,INR,9.419,6,1,active,2026-08-18T10:00:00+05:30
+trf_a2019a68,cty_b6ccbb3b,City centre,Old town,ferry,94,33.023,304.18,INR,3.798,4,1,active,2026-08-18T10:00:00+05:30
+trf_e556213c,cty_b6ccbb3b,Airport,Old town,cab,95,66.789,1509.35,INR,11.421,4,0,active,2026-08-18T10:00:00+05:30
+trf_cfa59a75,cty_b6ccbb3b,City centre,Business park,train,107,107.88,255.76,INR,4.423,4,0,active,2026-08-18T10:00:00+05:30
+trf_c7885219,cty_b6ccbb3b,Railway station,Business park,auto_rickshaw,220,99.095,1625.51,INR,9.513,80,0,active,2026-08-18T10:00:00+05:30
+trf_24ce7b04,cty_7be8559f,Airport,Hotel district,bus,53,26.851,120.55,INR,1.826,80,1,active,2026-08-18T10:00:00+05:30
+trf_19ff0a35,cty_7be8559f,Bus terminus,Business park,train,59,59.997,159.99,INR,2.46,6,1,active,2026-08-18T10:00:00+05:30
+trf_e23a5b3b,cty_7be8559f,Railway station,Beach road,auto_rickshaw,199,89.611,1473.78,INR,8.603,3,1,active,2026-08-18T10:00:00+05:30
+trf_3cdb70f5,cty_7be8559f,Port,Old town,train,73,73.872,187.74,INR,3.029,3,1,active,2026-08-18T10:00:00+05:30
+trf_4c721296,cty_7be8559f,Port,Beach road,ferry,51,18.089,184.71,INR,2.08,4,0,active,2026-08-18T10:00:00+05:30
+trf_3ad2adf3,cty_cf1c6ac5,Railway station,Beach road,cab,35,24.82,586.04,INR,4.244,40,0,active,2026-08-18T10:00:00+05:30
+trf_b5c909ba,cty_cf1c6ac5,Airport,Business park,cab,139,97.815,2191.93,INR,16.726,3,1,active,2026-08-18T10:00:00+05:30
+trf_aabfe978,cty_cf1c6ac5,Airport,Beach road,train,63,63.768,167.54,INR,2.614,3,0,active,2026-08-18T10:00:00+05:30
+trf_983434b8,cty_cf1c6ac5,Airport,Hotel district,auto_rickshaw,249,112.468,1839.49,INR,10.797,3,0,active,2026-08-18T10:00:00+05:30
+trf_1b522f8b,cty_cf1c6ac5,City centre,Old town,bus,116,58.483,215.45,INR,3.977,3,0,active,2026-08-18T10:00:00+05:30
+trf_13bed220,cty_590d4b7b,City centre,Old town,bus,88,44.046,172.14,INR,2.995,80,1,active,2026-08-18T10:00:00+05:30
+trf_c65fea78,cty_590d4b7b,Bus terminus,Beach road,bus,119,59.859,219.58,INR,4.07,4,1,active,2026-08-18T10:00:00+05:30
+trf_d35021f8,cty_590d4b7b,Airport,Old town,ferry,254,89.143,753.15,INR,10.252,4,1,active,2026-08-18T10:00:00+05:30
+trf_f4825a60,cty_590d4b7b,Airport,Hotel district,train,42,42.919,125.84,INR,1.76,3,1,active,2026-08-18T10:00:00+05:30
+trf_af4e9e1b,cty_590d4b7b,Railway station,Hill resort,ferry,110,38.835,350.68,INR,4.466,80,0,active,2026-08-18T10:00:00+05:30
+trf_79747bea,cty_ccb4fb74,Railway station,Hill resort,bus,168,84.47,293.41,INR,5.744,6,1,active,2026-08-18T10:00:00+05:30
+trf_7ce4e1d0,cty_ccb4fb74,Bus terminus,Hill resort,auto_rickshaw,39,17.737,323.79,INR,1.703,80,0,active,2026-08-18T10:00:00+05:30
+trf_dcab84ba,cty_ccb4fb74,Airport,Beach road,ferry,303,106.244,889.95,INR,12.218,4,0,active,2026-08-18T10:00:00+05:30
+trf_7da512df,cty_ccb4fb74,Port,Beach road,cab,49,34.819,806.02,INR,5.954,3,0,active,2026-08-18T10:00:00+05:30
+trf_71cca22a,cty_ccb4fb74,Railway station,Old town,bus,116,58.17,214.51,INR,3.956,6,1,active,2026-08-18T10:00:00+05:30
+trf_e9304fa9,cty_a50bc5dd,Bus terminus,Hill resort,auto_rickshaw,88,39.972,2412.39,LKR,3.837,40,0,active,2026-08-18T10:00:00+05:30
+trf_65ab5a9a,cty_a50bc5dd,Port,Hill resort,auto_rickshaw,222,100.21,5833.91,LKR,9.62,80,1,active,2026-08-18T10:00:00+05:30
+trf_1e645c0e,cty_a50bc5dd,Bus terminus,Business park,ferry,327,114.66,3398.36,LKR,13.186,80,1,active,2026-08-18T10:00:00+05:30
+trf_c8807e47,cty_a50bc5dd,Port,Hotel district,auto_rickshaw,96,43.534,2614.71,LKR,4.179,3,1,active,2026-08-18T10:00:00+05:30
+trf_9551a467,cty_a50bc5dd,Railway station,Beach road,bus,134,67.346,859.23,LKR,4.579,6,0,active,2026-08-18T10:00:00+05:30
+trf_adcb2882,cty_009c9fd2,Railway station,Hill resort,auto_rickshaw,105,47.283,2827.68,LKR,4.539,80,0,active,2026-08-18T10:00:00+05:30
+trf_d5424007,cty_009c9fd2,City centre,Beach road,train,107,107.159,902.83,LKR,4.394,4,0,active,2026-08-18T10:00:00+05:30
+trf_3e8702c0,cty_009c9fd2,City centre,Business park,train,56,56.304,541.76,LKR,2.308,6,0,active,2026-08-18T10:00:00+05:30
+trf_5e28eb5c,cty_009c9fd2,Airport,Hotel district,cab,57,39.915,3259.34,LKR,6.825,40,0,active,2026-08-18T10:00:00+05:30
+trf_a43f9a36,cty_009c9fd2,Bus terminus,Hill resort,train,26,26.434,329.68,LKR,1.084,6,1,active,2026-08-18T10:00:00+05:30
+trf_af98a792,cty_c0f2d9de,Railway station,Hotel district,ferry,339,118.791,1584.52,NPR,13.661,3,0,active,2026-08-18T10:00:00+05:30
+trf_e1d5905c,cty_c0f2d9de,Airport,Hill resort,cab,161,113.308,4052.45,NPR,19.376,4,0,active,2026-08-18T10:00:00+05:30
+trf_23588b28,cty_c0f2d9de,Airport,Old town,auto_rickshaw,34,15.684,465.52,NPR,1.506,80,0,active,2026-08-18T10:00:00+05:30
+trf_926a3896,cty_c0f2d9de,Railway station,Business park,auto_rickshaw,243,109.406,2864.79,NPR,10.503,40,0,active,2026-08-18T10:00:00+05:30
+trf_8e5d1029,cty_c0f2d9de,Port,Hotel district,cab,78,55.106,2003.72,NPR,9.423,6,0,active,2026-08-18T10:00:00+05:30
+trf_c5ca1e33,cty_95d040d8,Bus terminus,Hill resort,train,104,104.89,399.65,NPR,4.3,3,1,active,2026-08-18T10:00:00+05:30
+trf_36586ff6,cty_95d040d8,City centre,Hotel district,ferry,269,94.469,1273.20,NPR,10.864,4,0,active,2026-08-18T10:00:00+05:30
+trf_c719ff66,cty_95d040d8,Port,Business park,bus,238,119.303,636.65,NPR,8.113,80,0,active,2026-08-18T10:00:00+05:30
+trf_abdf9127,cty_95d040d8,Airport,Hotel district,ferry,134,46.937,664.79,NPR,5.398,80,1,active,2026-08-18T10:00:00+05:30
+trf_c8956698,cty_95d040d8,Railway station,Hotel district,auto_rickshaw,187,84.382,2224.18,NPR,8.101,4,0,active,2026-08-18T10:00:00+05:30
+trf_13e19f71,cty_79cbc59b,Bus terminus,Hotel district,train,84,84.832,209.66,BTN,3.478,80,1,active,2026-08-18T10:00:00+05:30
+trf_c8c6acd0,cty_79cbc59b,Airport,Hill resort,ferry,48,17.118,176.95,BTN,1.969,4,0,active,2026-08-18T10:00:00+05:30
+trf_9a64b153,cty_79cbc59b,Railway station,Beach road,cab,45,31.993,743.84,BTN,5.471,40,1,active,2026-08-18T10:00:00+05:30
+trf_5061979e,cty_79cbc59b,Port,Business park,train,11,11.827,63.65,BTN,0.485,80,1,active,2026-08-18T10:00:00+05:30
+trf_2835c2ca,cty_79cbc59b,Railway station,Beach road,auto_rickshaw,45,20.591,369.45,BTN,1.977,80,0,active,2026-08-18T10:00:00+05:30
+trf_d0e4e8aa,cty_9aa02925,City centre,Hotel district,cab,170,119.656,494.40,MVR,20.461,3,1,active,2026-08-18T10:00:00+05:30
+trf_60bdda07,cty_9aa02925,Airport,Hill resort,bus,150,75.246,49.16,MVR,5.117,3,0,active,2026-08-18T10:00:00+05:30
+trf_f5eaaf81,cty_9aa02925,Bus terminus,Hill resort,auto_rickshaw,79,35.712,113.11,MVR,3.428,3,0,active,2026-08-18T10:00:00+05:30
+trf_d90b3d2d,cty_9aa02925,Port,Hotel district,ferry,175,61.362,98.22,MVR,7.057,3,1,active,2026-08-18T10:00:00+05:30
+trf_d60225af,cty_9aa02925,Port,Hotel district,ferry,259,90.753,141.71,MVR,10.437,80,1,active,2026-08-18T10:00:00+05:30
+trf_dbe8f33c,cty_7b89639e,Bus terminus,Beach road,auto_rickshaw,115,52.054,38.49,AED,4.997,80,1,active,2026-08-18T10:00:00+05:30
+trf_fdc59c98,cty_7b89639e,Bus terminus,Beach road,cab,170,119.665,117.86,AED,20.463,3,0,active,2026-08-18T10:00:00+05:30
+trf_06ead23d,cty_7b89639e,City centre,Hill resort,ferry,338,118.432,43.55,AED,13.62,80,0,active,2026-08-18T10:00:00+05:30
+trf_427d71b0,cty_7b89639e,Airport,Business park,cab,127,89.236,88.34,AED,15.259,3,1,active,2026-08-18T10:00:00+05:30
+trf_ace21b16,cty_7b89639e,Bus terminus,Hill resort,auto_rickshaw,257,115.955,83.58,AED,11.132,40,0,active,2026-08-18T10:00:00+05:30
+trf_e6693098,cty_1ced6ede,Port,Business park,bus,78,39.5,6.99,AED,2.686,6,0,active,2026-08-18T10:00:00+05:30
+trf_7d6e9a8f,cty_1ced6ede,Port,Beach road,ferry,170,59.792,22.86,AED,6.876,40,0,active,2026-08-18T10:00:00+05:30
+trf_62c31548,cty_1ced6ede,Airport,Hill resort,auto_rickshaw,87,39.221,29.44,AED,3.765,4,0,active,2026-08-18T10:00:00+05:30
+trf_087a33ff,cty_1ced6ede,Railway station,Beach road,ferry,290,101.539,37.59,AED,11.677,3,0,active,2026-08-18T10:00:00+05:30
+trf_21cce1f7,cty_1ced6ede,Airport,Beach road,ferry,184,64.41,24.49,AED,7.407,3,1,active,2026-08-18T10:00:00+05:30
+trf_d9aa0454,cty_6320eea9,Railway station,Beach road,cab,89,62.429,61.77,QAR,10.675,40,0,active,2026-08-18T10:00:00+05:30
+trf_9e44d3ee,cty_6320eea9,Bus terminus,Business park,cab,70,49.516,49.35,QAR,8.467,80,1,active,2026-08-18T10:00:00+05:30
+trf_93b806ea,cty_6320eea9,Railway station,Old town,ferry,199,69.965,26.21,QAR,8.046,3,0,active,2026-08-18T10:00:00+05:30
+trf_aeabbb8f,cty_6320eea9,Bus terminus,Business park,train,29,29.272,4.31,QAR,1.2,40,1,active,2026-08-18T10:00:00+05:30
+trf_b2e43d22,cty_6320eea9,Railway station,Hotel district,ferry,66,23.149,9.84,QAR,2.662,3,1,active,2026-08-18T10:00:00+05:30
+trf_df65a416,cty_905fd8a1,Railway station,Hotel district,bus,96,48.136,2.97,SGD,3.273,6,1,active,2026-08-18T10:00:00+05:30
+trf_1f462a2d,cty_905fd8a1,City centre,Hill resort,bus,131,65.824,3.82,SGD,4.476,40,1,active,2026-08-18T10:00:00+05:30
+trf_a7af67cf,cty_905fd8a1,Port,Old town,cab,119,83.381,30.18,SGD,14.258,4,0,active,2026-08-18T10:00:00+05:30
+trf_b1cfd5ac,cty_905fd8a1,Bus terminus,Beach road,ferry,14,5.194,1.31,SGD,0.597,3,1,active,2026-08-18T10:00:00+05:30
+trf_03b51e5f,cty_905fd8a1,Railway station,Business park,cab,97,68.202,24.80,SGD,11.662,40,1,active,2026-08-18T10:00:00+05:30
+trf_a04e8b22,cty_a5f16904,Bus terminus,Business park,train,64,64.592,71.23,THB,2.648,4,1,active,2026-08-18T10:00:00+05:30
+trf_fd5184d8,cty_a5f16904,City centre,Business park,ferry,298,104.562,369.00,THB,12.025,80,0,active,2026-08-18T10:00:00+05:30
+trf_eb46939d,cty_a5f16904,City centre,Old town,train,38,38.241,49.04,THB,1.568,40,0,active,2026-08-18T10:00:00+05:30
+trf_fc462122,cty_a5f16904,Bus terminus,Business park,ferry,268,94.131,333.87,THB,10.825,3,0,active,2026-08-18T10:00:00+05:30
+trf_54534197,cty_a5f16904,Airport,Beach road,auto_rickshaw,144,65.142,455.63,THB,6.254,4,0,active,2026-08-18T10:00:00+05:30
+trf_5391d293,cty_c9f34ba7,City centre,Business park,auto_rickshaw,220,99.008,87.22,MYR,9.505,4,0,active,2026-08-18T10:00:00+05:30
+trf_02eaef2f,cty_c9f34ba7,Port,Hill resort,cab,88,61.794,75.15,MYR,10.567,3,0,active,2026-08-18T10:00:00+05:30
+trf_dc1bd239,cty_c9f34ba7,City centre,Hill resort,bus,30,15.045,4.57,MYR,1.023,80,0,active,2026-08-18T10:00:00+05:30
+trf_8e9f5958,cty_c9f34ba7,Bus terminus,Old town,train,109,109.783,13.94,MYR,4.501,80,0,active,2026-08-18T10:00:00+05:30
+trf_85329b5f,cty_c9f34ba7,Port,Hill resort,cab,22,15.795,20.81,MYR,2.701,3,0,active,2026-08-18T10:00:00+05:30
+trf_ca87cd33,cty_36afaa5c,Bus terminus,Old town,cab,146,102.232,446374.56,IDR,17.482,80,1,active,2026-08-18T10:00:00+05:30
+trf_67099282,cty_36afaa5c,Bus terminus,Hill resort,bus,215,107.594,70742.73,IDR,7.316,4,1,active,2026-08-18T10:00:00+05:30
+trf_d6cdecb3,cty_36afaa5c,Airport,Hill resort,ferry,216,75.87,126156.95,IDR,8.725,3,0,active,2026-08-18T10:00:00+05:30
+trf_e51cab8a,cty_36afaa5c,Port,Business park,auto_rickshaw,197,89.029,285569.43,IDR,8.547,6,1,active,2026-08-18T10:00:00+05:30
+trf_56db010f,cty_36afaa5c,Port,Hill resort,train,36,36.438,22010.66,IDR,1.494,6,0,active,2026-08-18T10:00:00+05:30
+trf_e1b706bb,cty_51a149b7,Bus terminus,Hotel district,train,37,37.227,208.31,JPY,1.526,3,1,active,2026-08-18T10:00:00+05:30
+trf_58b0e97a,cty_51a149b7,Railway station,Hotel district,train,44,44.919,236.30,JPY,1.842,3,0,active,2026-08-18T10:00:00+05:30
+trf_3fdea574,cty_51a149b7,Bus terminus,Hotel district,cab,48,34.279,1445.32,JPY,5.862,4,1,active,2026-08-18T10:00:00+05:30
+trf_28e14199,cty_51a149b7,Port,Hill resort,auto_rickshaw,261,117.644,3498.59,JPY,11.294,4,1,active,2026-08-18T10:00:00+05:30
+trf_a31f8f4f,cty_51a149b7,Airport,Hotel district,ferry,134,47.123,758.91,JPY,5.419,6,0,active,2026-08-18T10:00:00+05:30
+trf_6d1450da,cty_0b7f5985,Railway station,Old town,train,115,115.733,2.85,CHF,4.745,80,0,active,2026-08-18T10:00:00+05:30
+trf_452fb18e,cty_0b7f5985,Bus terminus,Hotel district,bus,165,82.923,3.03,CHF,5.639,4,1,active,2026-08-18T10:00:00+05:30
+trf_bb246fae,cty_0b7f5985,Bus terminus,Old town,train,15,15.514,0.75,CHF,0.636,3,1,active,2026-08-18T10:00:00+05:30
+trf_896ba0b4,cty_0b7f5985,City centre,Business park,auto_rickshaw,189,85.079,14.71,CHF,8.168,3,1,active,2026-08-18T10:00:00+05:30
+trf_eda138d1,cty_0b7f5985,City centre,Hotel district,bus,57,28.861,1.33,CHF,1.963,40,1,active,2026-08-18T10:00:00+05:30
