@@ -1,0 +1,12 @@
+# Waypoint backend ignores
+
+# Session store is runtime state, not source. PS-04.db is never written to and
+# is committed separately from the supplied PackagePro folder.
+data/
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.coverage
