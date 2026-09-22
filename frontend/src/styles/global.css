@@ -1,0 +1,281 @@
+/*
+  Liquid Itinerary — design tokens.
+
+  The old system was "control tower": flat navy, hard edges. This is fluid:
+  a deep drifting abyss, glassmorphic panels, iridescence reserved for
+  anything "live". Money is ALWAYS mono with tabular numerals so digits do
+  not dance during live repricing.
+
+  Restraint rule (kept from the old system): amber/iridescence is the single
+  "something is live" accent. Do not add a second bright color.
+*/
+
+:root {
+  /* Base — layered, never a flat fill */
+  --abyss: #070a13;
+  --abyss-2: #0b1020;
+
+  /* Glass surfaces */
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-2: rgba(255, 255, 255, 0.075);
+  --surface-3: rgba(255, 255, 255, 0.11);
+  --hairline: rgba(255, 255, 255, 0.08);
+  --hairline-2: rgba(255, 255, 255, 0.16);
+
+  /* Text */
+  --ink: #f2f5fa;
+  --ink-2: #a9b2c6;
+  --ink-3: #6e7891;
+
+  /* Aurora — gradient-only, decorative */
+  --aurora-1: #5eead4;
+  --aurora-2: #8b7cff;
+  --aurora-3: #e8a33d;
+
+  /* Semantic */
+  --go: #5fbf8f;
+  --stop: #e2665c;
+
+  /* Type */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-ui: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", "IBM Plex Mono", ui-monospace, monospace;
+
+  /* Radii — deeper glass, rounder */
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+
+  /* Shadows — layered with a refracted top edge */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --shadow-lg: 0 30px 70px -25px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09);
+
+  /* Motion — spring timings */
+  --ease-liquid: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-quint: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-1: 140ms;
+  --dur-2: 220ms;
+  --dur-3: 320ms;
+  --dur-4: 480ms;
+  --dur-5: 640ms;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--abyss);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* The drifting aurora — one compositing layer, GPU-only transforms. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(38vw 38vw at 18% 22%, rgba(94, 234, 212, 0.16), transparent 60%),
+    radial-gradient(42vw 42vw at 82% 28%, rgba(139, 124, 255, 0.18), transparent 62%),
+    radial-gradient(36vw 36vw at 50% 88%, rgba(232, 163, 61, 0.1), transparent 60%);
+  filter: blur(10px);
+  animation: aurora-drift 42s var(--ease-liquid) infinite alternate;
+  will-change: transform;
+}
+
+@keyframes aurora-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2.4vw, -1.6vw, 0) scale(1.06);
+  }
+  100% {
+    transform: translate3d(-1.8vw, 1.2vw, 0) scale(1.02);
+  }
+}
+
+::selection {
+  background: rgba(232, 163, 61, 0.35);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Money is always mono + tabular so repricing digits never shift width. */
+.money {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.dim {
+  color: var(--ink-2);
+}
+
+/* Glass panel with the refracted top hairline. */
+.panel {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.22),
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* Iridescent live accent — gradient text, used sparingly. */
+.iridescent {
+  background: linear-gradient(100deg, var(--aurora-1), var(--aurora-2) 55%, var(--aurora-3));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Buttons */
+.btn {
+  border: none;
+  border-radius: var(--r-md);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 12px 20px;
+  transition: transform var(--dur-2) var(--ease-liquid),
+    box-shadow var(--dur-2) var(--ease-liquid);
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: linear-gradient(120deg, var(--aurora-3), #f0b85a);
+  color: #16100a;
+  box-shadow: 0 8px 24px -10px rgba(232, 163, 61, 0.6);
+}
+
+.btn-confirm {
+  background: var(--go);
+  color: #06160e;
+  width: 100%;
+  padding: 14px;
+  box-shadow: 0 10px 30px -12px rgba(95, 191, 143, 0.65);
+}
+
+.btn-ghost {
+  background: var(--surface-2);
+  color: var(--ink);
+  border: 1px solid var(--hairline-2);
+}
+
+/* Focus ring visible on glass */
+:focus-visible {
+  outline: 2px solid rgba(139, 124, 255, 0.9);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Status dots */
+.dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.dot.live {
+  background: var(--aurora-3);
+  box-shadow: 0 0 10px var(--aurora-3);
+  animation: pulse 1.4s infinite ease-in-out;
+}
+.dot.ok {
+  background: var(--go);
+}
+.dot.no {
+  background: var(--stop);
+}
+.dot.idle {
+  background: var(--ink-3);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Scrollbar — thin, glassy */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface-3);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Reduced motion: pin everything. Accessibility + demo safety. */
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none;
+  }
+  .btn:hover:not(:disabled) {
+    transform: none;
+  }
+  .dot.live {
+    animation: none;
+  }
+}
