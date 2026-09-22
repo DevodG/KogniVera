@@ -56,7 +56,8 @@ export function toMoneyString(value) {
 export function formatMoney(amount, currency = "INR") {
   const value = money(amount).toDecimalPlaces(2);
   const symbol = SYMBOLS[currency] || "";
-  return `${symbol}${value.toFormat(2)}`;
+  const numStr = value.toNumber().toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return `${symbol}${numStr}`;
 }
 
 /** Signed display, e.g. "+₹250.00" / "-₹120.00". */
@@ -64,7 +65,8 @@ export function formatSignedMoney(amount, currency = "INR") {
   const value = money(amount).toDecimalPlaces(2);
   const symbol = SYMBOLS[currency] || "";
   const sign = value.isNegative() ? "−" : "+";
-  return `${sign}${symbol}${value.abs().toFormat(2)}`;
+  const numStr = value.abs().toNumber().toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return `${sign}${symbol}${numStr}`;
 }
 
 /** True when the total is within the cap (comparison only, never a display). */
