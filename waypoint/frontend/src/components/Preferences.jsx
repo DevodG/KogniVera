@@ -85,6 +85,44 @@ export default function Preferences({ cities, languages, onSubmit, busy, health 
     setEndDate(newEnd.toISOString().slice(0, 10));
   }
 
+  function applyPreset(name) {
+    setError("");
+    if (name === "tamil") {
+      const city = cities.find((c) => c.name.toLowerCase().includes("pondicherry")) || cities[0];
+      if (city) setCityId(city.city_id);
+      setStartDate("2026-09-05");
+      setEndDate("2026-09-10");
+      setTravelers(2);
+      setBudget("34000.00");
+      setLang("ta");
+      setSecondLang("en-IN");
+      setTheme("heritage");
+      setGoal("A relaxed Tamil heritage trip with local food.");
+    } else if (name === "hindi") {
+      const city = cities.find((c) => c.name.toLowerCase().includes("jaipur")) || cities[0];
+      if (city) setCityId(city.city_id);
+      setStartDate("2026-09-05");
+      setEndDate("2026-09-08");
+      setTravelers(2);
+      setBudget("35000.00");
+      setLang("hi");
+      setSecondLang("en-IN");
+      setTheme("heritage");
+      setGoal("A relaxed heritage short break with local food.");
+    } else if (name === "telugu") {
+      const city = cities.find((c) => c.name.toLowerCase().includes("tirupati")) || cities[0];
+      if (city) setCityId(city.city_id);
+      setStartDate("2026-09-05");
+      setEndDate("2026-09-08");
+      setTravelers(2);
+      setBudget("30000.00");
+      setLang("te");
+      setSecondLang("en-IN");
+      setTheme("pilgrimage");
+      setGoal("Spiritual temple tour with comfortable arrangements.");
+    }
+  }
+
   function submit(e) {
     e.preventDefault();
     setError("");
@@ -132,6 +170,37 @@ export default function Preferences({ cities, languages, onSubmit, busy, health 
           Destination, dates, travellers, INR cap, preferred language, theme and goal.
           Only INR packages are offered in the MVP.
         </p>
+
+        {/* Quick Demo Presets */}
+        <div className="field" style={{ marginBottom: 16 }}>
+          <label style={{ color: "var(--amber)", fontWeight: 600 }}>Quick Demo Presets</label>
+          <div className="row" style={{ gap: 8, flexWrap: "wrap", marginTop: 4 }}>
+            <button
+              type="button"
+              className="btn btn--ghost tiny"
+              onClick={() => applyPreset("tamil")}
+              title="6-day Pondicherry tour in Tamil + English, ₹34,000 cap"
+            >
+              🌊 Tamil Heritage (Pondicherry · 6d)
+            </button>
+            <button
+              type="button"
+              className="btn btn--ghost tiny"
+              onClick={() => applyPreset("hindi")}
+              title="4-day Jaipur tour in Hindi + English, ₹35,000 cap"
+            >
+              🏰 Hindi Cultural (Jaipur · 4d)
+            </button>
+            <button
+              type="button"
+              className="btn btn--ghost tiny"
+              onClick={() => applyPreset("telugu")}
+              title="4-day Tirupati tour in Telugu + English, ₹30,000 cap"
+            >
+              🕉️ Telugu Spiritual (Tirupati · 4d)
+            </button>
+          </div>
+        </div>
 
         <div className="field">
           <label htmlFor="city">Destination city (real PackagePro city)</label>
@@ -242,7 +311,7 @@ export default function Preferences({ cities, languages, onSubmit, busy, health 
             <select id="lang" value={lang} onChange={(e) => setLang(e.target.value)}>
               {languages.map((l) => (
                 <option key={l.bcp47} value={l.bcp47}>
-                  {l.english_name} — {l.bcp47}
+                  {l.english_name} {l.native_name && l.native_name !== l.english_name ? `(${l.native_name})` : ""} — {l.bcp47}
                 </option>
               ))}
             </select>
@@ -253,7 +322,7 @@ export default function Preferences({ cities, languages, onSubmit, busy, health 
               <option value="">none</option>
               {languages.map((l) => (
                 <option key={l.bcp47} value={l.bcp47}>
-                  {l.english_name} — {l.bcp47}
+                  {l.english_name} {l.native_name && l.native_name !== l.english_name ? `(${l.native_name})` : ""} — {l.bcp47}
                 </option>
               ))}
             </select>

@@ -81,6 +81,15 @@ def trip_days(start_date: str, end_date: str) -> int:
     return (e - s).days + 1
 
 
+def nights_between(start_date: str, end_date: str) -> int:
+    """Number of nights between checkin and checkout."""
+    from datetime import date
+
+    s = date.fromisoformat(start_date)
+    e = date.fromisoformat(end_date)
+    return max(1, (e - s).days)
+
+
 def remaining(cap: Decimal, total: Decimal) -> Decimal:
     return quantize_money(cap - total)
 

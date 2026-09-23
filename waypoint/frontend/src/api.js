@@ -94,3 +94,25 @@ export function getTrustReceipt(sessionId) {
 export function confirm(sessionId) {
   return request(`/sessions/${sessionId}/confirm`, { method: "POST", body: "{}" });
 }
+
+export function getFlights(sessionId) {
+  return request(`/sessions/${sessionId}/flights`);
+}
+
+export function selectFlight(sessionId, flight) {
+  return request(`/sessions/${sessionId}/select-flight`, {
+    method: "POST",
+    body: JSON.stringify(flight),
+  });
+}
+
+export function getHotels(sessionId) {
+  return request(`/sessions/${sessionId}/hotels`);
+}
+
+export function selectHotel(sessionId, hotel) {
+  return request(`/sessions/${sessionId}/select-hotel`, {
+    method: "POST",
+    body: JSON.stringify(hotel),
+  });
+}

@@ -8,6 +8,7 @@ import GuideCard from "./components/GuideCard.jsx";
 import TrustReceipt from "./components/TrustReceipt.jsx";
 import TraceTimeline, { BudgetBar, Ledger } from "./components/TraceTimeline.jsx";
 import NegotiateModal from "./components/NegotiateModal.jsx";
+import FlightHotelSelector from "./components/FlightHotelSelector.jsx";
 
 const STAGE = {
   prefs: "prefs",
@@ -48,7 +49,65 @@ export default function App() {
       .catch(() => setError("Backend unreachable on /api/health"));
     api.getCities().then(setCities).catch(() => setCities([]));
     api.getLanguages().then(setLanguages).catch(() => setLanguages([]));
+
+    const params = new URLSearchParams(window.location.search);
+    const sid = params.get("session") || localStorage.getItem("waypoint_session_id");
+    if (sid) {
+      restoreSession(sid);
+    }
   }, []);
+
+  async function restoreSession(sid) {
+    const s = await run(() => api.getSession(sid), "Could not restore previous session");
+    if (!s) {
+      localStorage.removeItem("waypoint_session_id");
+      return;
+    }
+    setSession(s);
+    localStorage.setItem("waypoint_session_id", s.session_id);
+    const url = new URL(window.location);
+    url.searchParams.set("session", s.session_id);
+    window.history.replaceState({}, "", url);
+
+    if (s.selected_package_id) {
+      const it = await run(() => api.getItinerary(s.session_id), "Could not load itinerary");
+      if (it) {
+        setItinerary(it);
+        const g = await run(() => api.getGuides(s.session_id), "");
+        if (g) setGuides(g.guides);
+
+        if (s.selected_guide_id) {
+          const rc = await run(() => api.getTrustReceipt(s.session_id), "");
+          if (rc) setReceipt(rc);
+          setStage(s.state === "confirmed" ? STAGE.done : STAGE.receipt);
+        } else {
+          setStage(STAGE.customizing);
+        }
+      } else {
+        setStage(STAGE.recommend);
+      }
+    } else if (s.recommendations && s.recommendations.length) {
+      setStage(STAGE.recommend);
+    } else {
+      setStage(STAGE.prefs);
+    }
+  }
+
+  function startNewTrip() {
+    localStorage.removeItem("waypoint_session_id");
+    const url = new URL(window.location);
+    url.searchParams.delete("session");
+    window.history.replaceState({}, "", url);
+    setSession(null);
+    setItinerary(null);
+    setGuides([]);
+    setReceipt(null);
+    setNegotiation(null);
+    setBanner("");
+    setError("");
+    setViewPackage(null);
+    setStage(STAGE.prefs);
+  }
 
   function guardError(e, fallback) {
     const msg = e?.message || fallback;
@@ -76,6 +135,10 @@ export default function App() {
     const view = await run(() => api.recommend(payload), "Recommendation failed");
     if (!view) return;
     setSession(view);
+    localStorage.setItem("waypoint_session_id", view.session_id);
+    const url = new URL(window.location);
+    url.searchParams.set("session", view.session_id);
+    window.history.replaceState({}, "", url);
     setStage(STAGE.recommend);
     setBanner(
       view.recommendations.length
@@ -122,6 +185,54 @@ export default function App() {
       setBanner("The Budget Guard blocked that swap.");
     } else {
       setBanner(`Swap applied. Total now ${formatMoney(view.budget.total, view.budget.currency)}.`);
+    }
+    await loadItinerary(session.session_id);
+  }
+
+  async function handleSelectFlight(flight) {
+    if (!session) return;
+    const view = await run(
+      () => api.selectFlight(session.session_id, flight),
+      "Flight selection failed",
+    );
+    if (!view) return;
+    setSession(view);
+    if (view.swap_blocked) {
+      setNegotiation(view.budget);
+      setBanner("The Budget Guard blocked that flight (exceeds budget cap).");
+    } else {
+      setBanner(
+        flight
+          ? `Flight selected: ${flight.airline} ${flight.flight_number}. Total now ${formatMoney(
+              view.budget.total,
+              view.budget.currency,
+            )}.`
+          : "Flight removed.",
+      );
+    }
+    await loadItinerary(session.session_id);
+  }
+
+  async function handleSelectHotel(hotel) {
+    if (!session) return;
+    const view = await run(
+      () => api.selectHotel(session.session_id, hotel),
+      "Hotel selection failed",
+    );
+    if (!view) return;
+    setSession(view);
+    if (view.swap_blocked) {
+      setNegotiation(view.budget);
+      setBanner("The Budget Guard blocked that hotel (exceeds budget cap).");
+    } else {
+      setBanner(
+        hotel
+          ? `Hotel selected: ${hotel.hotel_name}. Total now ${formatMoney(
+              view.budget.total,
+              view.budget.currency,
+            )}.`
+          : "Hotel removed.",
+      );
     }
     await loadItinerary(session.session_id);
   }
@@ -224,7 +335,16 @@ export default function App() {
             </p>
           </div>
         </div>
-        <div className="header__pulse">
+        <div className="header__pulse" style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          {session ? (
+            <span
+              className="badge badge--source"
+              style={{ fontFamily: "var(--mono)", fontSize: 11 }}
+              title="Resumable Session ID (persisted across refresh)"
+            >
+              {session.session_id}
+            </span>
+          ) : null}
           <span className={busy ? "pulse-dot pulse-dot--live" : "pulse-dot"} />
           {health ? (
             <span>
@@ -234,6 +354,17 @@ export default function App() {
           ) : (
             <span>connecting…</span>
           )}
+          {session ? (
+            <button
+              type="button"
+              className="btn btn--ghost"
+              style={{ fontSize: 11, padding: "3px 8px", marginLeft: 6 }}
+              onClick={startNewTrip}
+              title="Reset session and start a new trip"
+            >
+              + New Trip
+            </button>
+          ) : null}
         </div>
       </header>
 
@@ -296,6 +427,42 @@ export default function App() {
                 deterministically: language +40, duration +25, theme +20, within budget +15.
               </p>
             </div>
+            {session.ai_explanation ? (
+              <div
+                className="card"
+                style={{
+                  borderLeft: "3px solid var(--accent)",
+                  background: "rgba(99, 102, 241, 0.05)",
+                  marginBottom: 14,
+                }}
+              >
+                <h3
+                  style={{
+                    fontSize: 13.5,
+                    color: "var(--accent)",
+                    marginBottom: 6,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                  }}
+                >
+                  <span>✦</span> Agent Plan Explanation
+                  <span className="badge badge--source">
+                    {session.ai_explanation.includes("NIM") ? "NVIDIA NIM" : "Waypoint AI"}
+                  </span>
+                </h3>
+                <p
+                  style={{
+                    fontSize: 12.5,
+                    lineHeight: 1.5,
+                    whiteSpace: "pre-wrap",
+                    color: "var(--text-light)",
+                  }}
+                >
+                  {session.ai_explanation}
+                </p>
+              </div>
+            ) : null}
             {session.recommendations.length ? (
               session.recommendations.map((pkg) => (
                 <PackageCard
@@ -352,19 +519,30 @@ export default function App() {
           <div className="stack">
             <Itinerary itinerary={itinerary} onSwap={handleSwap} busy={busy} />
             {stage === STAGE.customizing ? (
-              <div className="card">
-                <h2 className="card__title">Next: pick a local guide</h2>
-                <p className="card__sub">
-                  Guides below are filtered by your language, theme and real date availability.
-                </p>
-                <button
-                  className="btn btn--primary"
-                  onClick={() => setStage(STAGE.guides)}
-                  disabled={busy}
-                >
-                  Match me with a guide →
-                </button>
-              </div>
+              <>
+                <FlightHotelSelector
+                  sessionId={session.session_id}
+                  selectedFlight={itinerary.selected_flight || session.selected_flight}
+                  selectedHotel={itinerary.selected_hotel || session.selected_hotel}
+                  budget={itinerary.budget || session.budget}
+                  onSelectFlight={handleSelectFlight}
+                  onSelectHotel={handleSelectHotel}
+                  busy={busy}
+                />
+                <div className="card">
+                  <h2 className="card__title">Next: pick a local guide</h2>
+                  <p className="card__sub">
+                    Guides below are filtered by your language, theme and real date availability.
+                  </p>
+                  <button
+                    className="btn btn--primary"
+                    onClick={() => setStage(STAGE.guides)}
+                    disabled={busy}
+                  >
+                    Match me with a guide →
+                  </button>
+                </div>
+              </>
             ) : null}
           </div>
           <div className="stack">
@@ -525,6 +703,24 @@ function buildLedger(itinerary, session) {
         currency: comp.currency,
       });
     }
+  }
+  const flight = itinerary.selected_flight || session?.selected_flight;
+  if (flight && (flight.total_fare || flight.price)) {
+    lines.push({
+      title: `Flight · ${flight.airline} (${flight.flight_number}) · ${flight.origin_airport || flight.origin} → ${flight.destination_airport || flight.destination}`,
+      source_table: flight.source || "Amadeus.flight-offers",
+      amount: flight.total_fare || flight.price,
+      currency: flight.currency || "INR",
+    });
+  }
+  const hotel = itinerary.selected_hotel || session?.selected_hotel;
+  if (hotel && (hotel.total_cost || hotel.price_total)) {
+    lines.push({
+      title: `Hotel · ${hotel.hotel_name} · ${hotel.room_name || hotel.room_type_name || "Room"} (${hotel.nights}n)`,
+      source_table: hotel.source || "Hotelbeds.hotel-api",
+      amount: hotel.total_cost || hotel.price_total,
+      currency: hotel.currency || "INR",
+    });
   }
   const guide = itinerary.selected_guide;
   if (guide && guide.selected_cost) {

@@ -218,6 +218,8 @@ class ItineraryResponse(BaseModel):
     currency: str
     budget: BudgetStateModel
     selected_guide: Optional[GuideModel] = None
+    selected_flight: Optional[dict[str, Any]] = None
+    selected_hotel: Optional[dict[str, Any]] = None
     swaps: list[dict[str, Any]] = Field(default_factory=list)
 
 
@@ -229,6 +231,9 @@ class SessionResponse(BaseModel):
     recommendations: list[RecommendationModel] = Field(default_factory=list)
     selected_package_id: Optional[str] = None
     selected_guide_id: Optional[str] = None
+    selected_flight: Optional[dict[str, Any]] = None
+    selected_hotel: Optional[dict[str, Any]] = None
+    ai_explanation: Optional[str] = None
     budget: Optional[BudgetStateModel] = None
     trace: list[TraceEventModel] = Field(default_factory=list)
     audit: list[dict[str, Any]] = Field(default_factory=list)

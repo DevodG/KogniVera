@@ -1,10 +1,11 @@
 """Waypoint API routes."""
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Optional
 
 from fastapi import APIRouter, HTTPException, status
 
+from .. import config
 from ..agent.solver import Solver
 from ..db.packagepro import PackageProDB
 from ..db.session import SessionDB
@@ -47,7 +48,7 @@ def health() -> HealthModel:
         packagepro_path=pro.path,
         session_db=_sessions().path,
         rows=pro.table_counts(),
-        ai_key_configured=False,
+        ai_key_configured=bool(config.AI_API_KEY),
     )
 
 
@@ -226,3 +227,49 @@ def session_guides(session_id: str) -> dict[str, Any]:
             for e in entries
         ],
     }
+
+
+@router.get("/sessions/{session_id}/flights")
+def session_flights(session_id: str) -> dict[str, Any]:
+    """Search flight offers via AmadeusFlightAdapter."""
+    solver = _solver()
+    try:
+        flights = solver.get_flights(session_id)
+        return {"session_id": session_id, "flights": flights}
+    except KeyError:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="session not found")
+
+
+@router.post("/sessions/{session_id}/select-flight")
+def select_flight(session_id: str, flight: Optional[dict[str, Any]] = None) -> dict[str, Any]:
+    """Add/replace flight in itinerary, routed through BudgetGuard."""
+    solver = _solver()
+    try:
+        return solver.select_flight(session_id, flight)
+    except KeyError:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="session not found")
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc))
+
+
+@router.get("/sessions/{session_id}/hotels")
+def session_hotels(session_id: str) -> dict[str, Any]:
+    """Fetch hotel rooms via HotelbedsAdapter."""
+    solver = _solver()
+    try:
+        hotels = solver.get_hotels(session_id)
+        return {"session_id": session_id, "hotels": hotels}
+    except KeyError:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="session not found")
+
+
+@router.post("/sessions/{session_id}/select-hotel")
+def select_hotel(session_id: str, hotel: Optional[dict[str, Any]] = None) -> dict[str, Any]:
+    """Add/upgrade hotel room in itinerary, routed through BudgetGuard."""
+    solver = _solver()
+    try:
+        return solver.select_hotel(session_id, hotel)
+    except KeyError:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="session not found")
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc))

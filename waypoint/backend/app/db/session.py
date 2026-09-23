@@ -122,6 +122,11 @@ class SessionDB:
     def _init_schema(self) -> None:
         with self.connect() as conn, _LOCK:
             conn.executescript(_SCHEMA)
+            for col in ("selected_flight_json", "selected_hotel_json"):
+                try:
+                    conn.execute(f"ALTER TABLE sessions ADD COLUMN {col} TEXT")
+                except sqlite3.OperationalError:
+                    pass
             conn.commit()
 
     # ------------------------------------------------------------------
@@ -177,6 +182,10 @@ class SessionDB:
         d["removed_optional_list"] = json.loads(d.pop("removed_optional") or "[]")
         d["confirmation"] = json.loads(d["confirmation_json"]) if d.get("confirmation_json") else None
         d.pop("confirmation_json", None)
+        d["selected_flight"] = json.loads(d["selected_flight_json"]) if d.get("selected_flight_json") else None
+        d.pop("selected_flight_json", None)
+        d["selected_hotel"] = json.loads(d["selected_hotel_json"]) if d.get("selected_hotel_json") else None
+        d.pop("selected_hotel_json", None)
         d["confirmed"] = bool(d["confirmed"])
         return d
 
@@ -195,6 +204,12 @@ class SessionDB:
             fields["confirmation_json"] = json.dumps(
                 fields.pop("confirmation"), ensure_ascii=False
             )
+        if "selected_flight" in fields:
+            val = fields.pop("selected_flight")
+            fields["selected_flight_json"] = json.dumps(val, ensure_ascii=False) if val else None
+        if "selected_hotel" in fields:
+            val = fields.pop("selected_hotel")
+            fields["selected_hotel_json"] = json.dumps(val, ensure_ascii=False) if val else None
         fields["updated_at"] = _now()
         cols = ", ".join(f"{k} = ?" for k in fields)
         params = list(fields.values()) + [session_id]

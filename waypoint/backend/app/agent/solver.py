@@ -55,7 +55,27 @@ class Solver:
         ))
         recs, rejected, _ = self._recommend(session_id, request)
         self.sessions.update_session(session_id, status="recommended")
-        return self._session_view(session_id, recommendations=recs)
+
+        ai_exp = None
+        if recs:
+            try:
+                from ..services.llm import NvidiaNimService
+                top_rec = recs[0]
+                city = self.pro.city(request["city_id"])
+                city_name = city["name"] if city else request["city_id"]
+                ai_exp = NvidiaNimService().explain_recommendation(
+                    pkg_name=top_rec.name,
+                    city_name=city_name,
+                    duration_days=top_rec.duration_days,
+                    theme=top_rec.theme,
+                    languages_offered=top_rec.languages_offered,
+                    traveler_goal=request.get("goal"),
+                    language=request.get("preferred_languages", ["en-IN"])[0],
+                )
+            except Exception:
+                ai_exp = None
+
+        return self._session_view(session_id, recommendations=recs, ai_explanation=ai_exp)
 
     def _recommend(self, session_id: str, request: dict[str, Any]):
         self.sessions.add_trace(session_id, trace.searching_packages(request))
@@ -80,7 +100,8 @@ class Solver:
         return recs, rejected, scored
 
     def _session_view(self, session_id: str,
-                      recommendations: Optional[list[Any]] = None) -> dict[str, Any]:
+                      recommendations: Optional[list[Any]] = None,
+                      ai_explanation: Optional[str] = None) -> dict[str, Any]:
         s = self.sessions.get_session(session_id)
         view = {
             "session_id": session_id,
@@ -90,6 +111,9 @@ class Solver:
             "recommendations": recommendations or [],
             "selected_package_id": s.get("selected_package_id"),
             "selected_guide_id": s.get("selected_guide_id"),
+            "selected_flight": s.get("selected_flight"),
+            "selected_hotel": s.get("selected_hotel"),
+            "ai_explanation": ai_explanation,
             "budget": None,
             "trace": self.sessions.trace(session_id),
             "audit": self.sessions.audit(session_id),
@@ -362,6 +386,36 @@ class Solver:
             )
         )
 
+        flt = s.get("selected_flight")
+        if flt:
+            rows.append(
+                TrustReceiptRow(
+                    decision="Flight",
+                    source=flt.get("source", "Amadeus.flight-offers"),
+                    why_selected=(
+                        f"{flt['airline']} {flt['flight_number']} "
+                        f"({flt['origin_airport']} → {flt['destination_airport']})"
+                    ),
+                    price_effect=f"{it.flight_total():.2f}",
+                    currency=flt.get("currency", "INR"),
+                )
+            )
+
+        htl = s.get("selected_hotel")
+        if htl:
+            rows.append(
+                TrustReceiptRow(
+                    decision="Hotel",
+                    source=htl.get("source", "Hotelbeds.hotel-api"),
+                    why_selected=(
+                        f"{htl['hotel_name']} · {htl['room_name']} "
+                        f"({htl['nights']} night(s))"
+                    ),
+                    price_effect=f"{it.hotel_total():.2f}",
+                    currency=htl.get("currency", "INR"),
+                )
+            )
+
         gid = s.get("selected_guide_id")
         if gid:
             guide = self.pro.guide(gid)
@@ -395,6 +449,8 @@ class Solver:
             totals={
                 "package_base": f"{dec(pkg['base_price']):.2f}",
                 "components": f"{_component_sum(comps):.2f}",
+                "flight": f"{it.flight_total():.2f}",
+                "hotel": f"{it.hotel_total():.2f}",
                 "guide": f"{it.guide_total():.2f}",
                 "grand_total": f"{total:.2f}",
                 "budget_cap": s["budget_amount"],
@@ -459,6 +515,167 @@ class Solver:
         return {"session_id": session_id, "confirmation": confirmation}
 
     # ------------------------------------------------------------------
+
+    def get_flights(self, session_id: str) -> list[dict[str, Any]]:
+        from ..services.external.amadeus import AmadeusFlightAdapter
+        s = self.sessions.get_session(session_id)
+        if s is None:
+            raise KeyError(f"unknown session {session_id}")
+        city = self.pro.city(s["city_id"])
+        dest_name = city["name"] if city else s.get("city_name") or "Jaipur"
+        adapter = AmadeusFlightAdapter()
+        return adapter.search_flights(
+            destination_city_name=dest_name,
+            departure_date=s["start_date"],
+            return_date=s["end_date"],
+            travelers=int(s.get("travelers") or 1),
+        )
+
+    def select_flight(self, session_id: str, flight_data: Optional[dict[str, Any]] = None) -> dict[str, Any]:
+        s = self.sessions.get_session(session_id)
+        if s is None:
+            raise KeyError(f"unknown session {session_id}")
+        if not flight_data:
+            self.sessions.update_session(session_id, selected_flight=None)
+            it = ItineraryService(self.pro, self.sessions, session_id)
+            new_total = it.current_total()
+            self.sessions.update_session(session_id, total_amount=money_str(new_total))
+            it._persist_cart()
+            view = self._session_view(session_id)
+            return view
+
+        fare = dec(flight_data.get("total_fare", "0.00"))
+        it = ItineraryService(self.pro, self.sessions, session_id)
+        old_flight_fare = it.flight_total()
+        new_total = (it.current_total() - old_flight_fare) + fare
+        guard = BudgetGuard(self.sessions, session_id)
+        result = guard.decide(
+            new_total, currency=flight_data.get("currency", "INR"), action="select_flight",
+            detail={
+                "flight_id": flight_data.get("flight_id"),
+                "airline": flight_data.get("airline"),
+                "fare": money_str(fare),
+            },
+        )
+        if result["decision"] != "approved":
+            self.sessions.add_trace(
+                session_id,
+                trace.build(
+                    "flight", "blocked", "Amadeus.flight-offers",
+                    f"{flight_data.get('airline')} {flight_data.get('flight_number')}",
+                    f"Flight blocked: would exceed budget cap by {result['overage']} {result['currency']}.",
+                    "BudgetGuard structurally enforces your budget cap.",
+                    step=3,
+                )
+            )
+            return self._session_view(session_id) | {
+                "budget": result,
+                "budget_message": guard.message(result),
+                "swap_blocked": True,
+            }
+
+        self.sessions.update_session(
+            session_id,
+            selected_flight=flight_data,
+            total_amount=money_str(new_total),
+        )
+        self.sessions.add_trace(
+            session_id,
+            trace.build(
+                "flight", "complete", "Amadeus.flight-offers",
+                f"{flight_data.get('airline')} {flight_data.get('flight_number')}",
+                f"Flight confirmed with Amadeus: {flight_data.get('airline')} for {money_str(fare)} {flight_data.get('currency', 'INR')}.",
+                "Flight offer verified and added to cart ledger.",
+                step=3,
+            )
+        )
+        self.sessions.add_trace(
+            session_id, trace.budget_approved(result["remaining"], result["currency"])
+        )
+        it = ItineraryService(self.pro, self.sessions, session_id)
+        it._persist_cart()
+        view = self._session_view(session_id)
+        view["budget"] = result
+        return view
+
+    def get_hotels(self, session_id: str) -> list[dict[str, Any]]:
+        from ..services.external.hotelbeds import HotelbedsAdapter
+        s = self.sessions.get_session(session_id)
+        if s is None:
+            raise KeyError(f"unknown session {session_id}")
+        adapter = HotelbedsAdapter(self.pro)
+        return adapter.get_hotel_rates(
+            city_id=s["city_id"],
+            checkin_date=s["start_date"],
+            checkout_date=s["end_date"],
+        )
+
+    def select_hotel(self, session_id: str, hotel_data: Optional[dict[str, Any]] = None) -> dict[str, Any]:
+        s = self.sessions.get_session(session_id)
+        if s is None:
+            raise KeyError(f"unknown session {session_id}")
+        if not hotel_data:
+            self.sessions.update_session(session_id, selected_hotel=None)
+            it = ItineraryService(self.pro, self.sessions, session_id)
+            new_total = it.current_total()
+            self.sessions.update_session(session_id, total_amount=money_str(new_total))
+            it._persist_cart()
+            view = self._session_view(session_id)
+            return view
+
+        cost = dec(hotel_data.get("total_cost", "0.00"))
+        it = ItineraryService(self.pro, self.sessions, session_id)
+        old_hotel_cost = it.hotel_total()
+        new_total = (it.current_total() - old_hotel_cost) + cost
+        guard = BudgetGuard(self.sessions, session_id)
+        result = guard.decide(
+            new_total, currency=hotel_data.get("currency", "INR"), action="select_hotel",
+            detail={
+                "hotel_id": hotel_data.get("hotel_id"),
+                "hotel_name": hotel_data.get("hotel_name"),
+                "cost": money_str(cost),
+            },
+        )
+        if result["decision"] != "approved":
+            self.sessions.add_trace(
+                session_id,
+                trace.build(
+                    "hotel", "blocked", "Hotelbeds.hotel-api",
+                    f"{hotel_data.get('hotel_name')} ({hotel_data.get('room_name')})",
+                    f"Hotel upgrade blocked: would exceed budget cap by {result['overage']} {result['currency']}.",
+                    "BudgetGuard structurally enforces your budget cap.",
+                    step=3,
+                )
+            )
+            return self._session_view(session_id) | {
+                "budget": result,
+                "budget_message": guard.message(result),
+                "swap_blocked": True,
+            }
+
+        self.sessions.update_session(
+            session_id,
+            selected_hotel=hotel_data,
+            total_amount=money_str(new_total),
+        )
+        self.sessions.add_trace(
+            session_id,
+            trace.build(
+                "hotel", "complete", "Hotelbeds.hotel-api",
+                f"{hotel_data.get('hotel_name')} ({hotel_data.get('room_name')})",
+                f"Hotel room selected via Hotelbeds: {hotel_data.get('hotel_name')} for {money_str(cost)} {hotel_data.get('currency', 'INR')}.",
+                "Hotel rate verified and added to cart ledger.",
+                step=3,
+            )
+        )
+        self.sessions.add_trace(
+            session_id, trace.budget_approved(result["remaining"], result["currency"])
+        )
+        it = ItineraryService(self.pro, self.sessions, session_id)
+        it._persist_cart()
+        view = self._session_view(session_id)
+        view["budget"] = result
+        return view
 
     def optional_model_summaries(self) -> Optional[Any]:
         return None

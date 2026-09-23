@@ -106,8 +106,18 @@ class ItineraryService:
         cost = self.session.get("guide_cost")
         return dec(cost) if cost else Decimal("0")
 
+    def flight_total(self) -> Decimal:
+        flt = self.session.get("selected_flight")
+        return dec(flt.get("total_fare")) if flt else Decimal("0")
+
+    def hotel_total(self) -> Decimal:
+        htl = self.session.get("selected_hotel")
+        return dec(htl.get("total_cost")) if htl else Decimal("0")
+
     def current_total(self) -> Decimal:
-        return quantize_money(self.package_total() + self.guide_total())
+        return quantize_money(
+            self.package_total() + self.guide_total() + self.flight_total() + self.hotel_total()
+        )
 
     # ------------------------------------------------------------------
     # Swap validation
@@ -320,6 +330,39 @@ class ItineraryService:
                         },
                     }
                 )
+        flt = self.session.get("selected_flight")
+        if flt:
+            lines.append(
+                {
+                    "line_type": "flight",
+                    "source_table": flt.get("source", "Amadeus.flight-offers"),
+                    "source_id": flt.get("flight_id", "flight"),
+                    "title": (
+                        f"Flight · {flt.get('airline', 'Flight')} {flt.get('flight_number', '')} "
+                        f"({flt.get('origin_airport', 'ORIG')} → {flt.get('destination_airport', 'DEST')})"
+                    ),
+                    "amount": money_str(dec(flt.get("total_fare", "0.00"))),
+                    "currency": flt.get("currency", "INR"),
+                    "signed_delta": money_str(dec(flt.get("total_fare", "0.00"))),
+                    "meta": flt,
+                }
+            )
+
+        htl = self.session.get("selected_hotel")
+        if htl:
+            lines.append(
+                {
+                    "line_type": "hotel",
+                    "source_table": htl.get("source", "Hotelbeds.hotel-api"),
+                    "source_id": htl.get("hotel_id", "hotel"),
+                    "title": f"Hotel · {htl.get('hotel_name', 'Hotel')} ({htl.get('room_name', 'Standard Room')})",
+                    "amount": money_str(dec(htl.get("total_cost", "0.00"))),
+                    "currency": htl.get("currency", "INR"),
+                    "signed_delta": money_str(dec(htl.get("total_cost", "0.00"))),
+                    "meta": htl,
+                }
+            )
+
         self.sessions.replace_cart(self.session_id, lines)
 
     # ------------------------------------------------------------------
@@ -381,6 +424,8 @@ class ItineraryService:
             currency=pkg["currency"],
             budget=budget,
             selected_guide=guide_model,
+            selected_flight=self.session.get("selected_flight"),
+            selected_hotel=self.session.get("selected_hotel"),
             swaps=self._swap_history(),
         )
 
