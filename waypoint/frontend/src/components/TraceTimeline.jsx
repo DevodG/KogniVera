@@ -49,7 +49,7 @@ export function BudgetBar({ budget }) {
   if (!budget) return null;
   const cap = money(budget.cap);
   const total = money(budget.total);
-  const pct = cap.gt(0) ? total.dividedBy(cap).times(100) : money(100);
+  const pct = cap.gt(0) ? total.dividedBy(cap).times(100) : money("100");
   const clamped = Math.min(Math.max(pct.toNumber(), 0), 100);
   const over = total.gt(cap);
   const warn = !over && pct.gte(85);
@@ -121,7 +121,7 @@ export function Ledger({ lines = [], title = "Ledger" }) {
             <td />
             <td className="num">
               {formatMoney(
-                lines.reduce((acc, ln) => acc.plus(money(ln.amount)), money(0)),
+                lines.reduce((acc, ln) => acc.plus(money(ln.amount)), money("0")),
                 currency,
               )}
             </td>

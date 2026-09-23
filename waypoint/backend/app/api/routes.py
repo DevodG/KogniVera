@@ -71,6 +71,36 @@ def languages() -> list[LanguageModel]:
     ]
 
 
+@router.get("/city-packages/{city_id}")
+def city_packages(city_id: str) -> list[dict[str, Any]]:
+    """Available packages for a city — durations, themes, price ranges.
+
+    The frontend uses this to hint valid date ranges and budget when the
+    user selects a destination.
+    """
+    pro = _pro()
+    packages = pro.packages_by_city(city_id)
+    out = []
+    for p in packages:
+        from ..services import pricing as _pricing
+        comps = pro.components(p["package_id"])
+        total = _pricing.included_total(p["base_price"], comps)
+        out.append({
+            "package_id": p["package_id"],
+            "name": p["name"],
+            "theme": p["theme"],
+            "tier": p["tier"],
+            "duration_days": int(p["duration_days"]),
+            "base_price": str(p["base_price"]),
+            "included_total": f"{total:.2f}",
+            "currency": p["currency"],
+            "min_group_size": int(p["min_group_size"]),
+            "max_group_size": int(p["max_group_size"]),
+            "languages_offered": [t.strip() for t in (p["languages_offered"] or "").split(",") if t.strip()],
+        })
+    return out
+
+
 @router.post("/planner/recommend")
 def recommend(request: PlannerRequest) -> dict[str, Any]:
     solver = _solver()

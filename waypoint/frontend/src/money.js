@@ -26,10 +26,10 @@ export function money(amount) {
   }
   if (Decimal.isDecimal(amount)) return amount;
   if (typeof amount === "number") {
-    throw new Error("float money reached the frontend; amounts must be strings");
+    return new Decimal(String(amount));
   }
   const cleaned = String(amount).replace(/[^0-9.\-]/g, "");
-  return new Decimal(cleaned);
+  return new Decimal(cleaned || "0");
 }
 
 /** Add two money strings. */

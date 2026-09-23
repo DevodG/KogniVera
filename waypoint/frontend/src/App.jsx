@@ -178,6 +178,38 @@ export default function App() {
     setViewPackage(pkg);
   }
 
+  function canNavigateTo(key) {
+    if (key === STAGE.prefs) return true;
+    if (key === STAGE.recommend) return Boolean(session);
+    if (key === STAGE.customizing) return Boolean(itinerary);
+    if (key === STAGE.guides) return Boolean(itinerary);
+    if (key === STAGE.receipt) return Boolean(receipt);
+    return false;
+  }
+
+  function handleStepClick(targetStage) {
+    if (!canNavigateTo(targetStage)) {
+      if (targetStage === STAGE.recommend) {
+        setBanner("Submit your preferences in Step 1 to generate recommendations.");
+      } else if (targetStage === STAGE.customizing) {
+        setBanner("Choose a package in Step 2 first to view and customize its itinerary.");
+      } else if (targetStage === STAGE.guides) {
+        setBanner("Choose a package in Step 2 first before selecting guides.");
+      } else if (targetStage === STAGE.receipt) {
+        setBanner("Select a guide to proceed to the Trust Receipt.");
+      }
+      return;
+    }
+    if (targetStage === STAGE.guides && !guides.length && session) {
+      api.getGuides(session.session_id).then((g) => {
+        if (g) setGuides(g.guides);
+      });
+    }
+    setStage(targetStage);
+    setBanner("");
+    setError("");
+  }
+
   return (
     <div className="app">
       <header className="app__header">
@@ -206,19 +238,31 @@ export default function App() {
       </header>
 
       <nav className="stepper" aria-label="Flow progress">
-        {STEPPER.map((s, i) => (
-          <div
-            key={s.key}
-            className={`stepper__item ${
-              i < currentStep(stage) ? "stepper__item--done" : i === currentStep(stage) ? "stepper__item--active" : ""
-            }`}
-          >
-            <span className="stepper__n">
-              {i < currentStep(stage) ? "DONE" : i === currentStep(stage) ? "NOW" : `STEP ${i + 1}`}
-            </span>
-            <span>{s.label}</span>
-          </div>
-        ))}
+        {STEPPER.map((s, i) => {
+          const unlocked = canNavigateTo(s.key);
+          const isCurrent = i === currentStep(stage);
+          const isDone = i < currentStep(stage);
+          return (
+            <button
+              key={s.key}
+              type="button"
+              className={`stepper__item ${
+                isDone ? "stepper__item--done" : isCurrent ? "stepper__item--active" : ""
+              } ${unlocked ? "stepper__item--clickable" : ""}`}
+              onClick={() => handleStepClick(s.key)}
+              title={
+                unlocked
+                  ? `Go to Step ${i + 1} (${s.label})`
+                  : `Step ${i + 1}: ${s.label} (complete earlier steps first)`
+              }
+            >
+              <span className="stepper__n">
+                {isDone ? "DONE" : isCurrent ? "NOW" : `STEP ${i + 1}`}
+              </span>
+              <span>{s.label}</span>
+            </button>
+          );
+        })}
       </nav>
 
       {banner ? <div className="alert alert--info">{banner}</div> : null}
@@ -265,9 +309,23 @@ export default function App() {
                 />
               ))
             ) : (
-              <div className="empty">
-                No package satisfied every constraint. Try a longer date range, a different
-                language, or a higher cap.
+              <div className="card">
+                <h3 style={{ color: "var(--amber)", marginBottom: 8 }}>No packages matched</h3>
+                <p className="card__sub">
+                  No package in <strong>PackagePro.tour_packages</strong> satisfied every
+                  constraint (city + exact duration + language + group size + INR currency).
+                </p>
+                <ul className="pkg__reasons" style={{ marginBottom: 12 }}>
+                  <li>Try a different date range — the package duration must <strong>exactly</strong> match your trip days</li>
+                  <li>Try a different language or set it to English (en-IN) which most packages offer</li>
+                  <li>Increase the budget cap — some packages are above ₹20,000</li>
+                </ul>
+                <button
+                  className="btn btn--primary"
+                  onClick={() => { setStage(STAGE.prefs); setBanner(""); setError(""); }}
+                >
+                  ← Go back and adjust
+                </button>
               </div>
             )}
           </div>

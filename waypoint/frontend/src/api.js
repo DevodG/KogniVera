@@ -33,6 +33,10 @@ export function getLanguages() {
   return request("/languages");
 }
 
+export function getCityPackages(cityId) {
+  return request(`/city-packages/${encodeURIComponent(cityId)}`);
+}
+
 export function recommend(payload) {
   return request("/planner/recommend", {
     method: "POST",

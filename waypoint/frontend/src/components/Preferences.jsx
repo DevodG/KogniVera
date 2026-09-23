@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatMoney, money } from "../money.js";
+import * as api from "../api.js";
 
 const STEPS = [
   "Find packages that match your city, dates, language, group size, and budget.",
@@ -12,13 +13,17 @@ const STEPS = [
 /**
  * Preferences screen. Collects the traveller's constraints, then shows the
  * agent's plan *before* any query runs.
+ *
+ * When the user selects a city, we fetch available packages from
+ * PackagePro.tour_packages and show duration/theme/price hints so the user
+ * can pick a date range that actually matches an existing package.
  */
 export default function Preferences({ cities, languages, onSubmit, busy, health }) {
   const [cityId, setCityId] = useState("");
   const [startDate, setStartDate] = useState("2026-09-05");
-  const [endDate, setEndDate] = useState("2026-09-07");
+  const [endDate, setEndDate] = useState("2026-09-08");
   const [travelers, setTravelers] = useState(2);
-  const [budget, setBudget] = useState("20000.00");
+  const [budget, setBudget] = useState("35000.00");
   const [lang, setLang] = useState("hi");
   const [secondLang, setSecondLang] = useState("en-IN");
   const [theme, setTheme] = useState("heritage");
@@ -26,7 +31,59 @@ export default function Preferences({ cities, languages, onSubmit, busy, health 
   const [showPlan, setShowPlan] = useState(false);
   const [error, setError] = useState("");
 
+  // City-aware package hints
+  const [cityPackages, setCityPackages] = useState([]);
+  const [loadingHints, setLoadingHints] = useState(false);
+
+  // When a city is selected, fetch available packages for that city
+  useEffect(() => {
+    if (!cityId) {
+      setCityPackages([]);
+      return;
+    }
+    setLoadingHints(true);
+    api
+      .getCityPackages(cityId)
+      .then((pkgs) => {
+        setCityPackages(pkgs);
+
+        // Auto-adjust end date to match the first available package duration
+        if (pkgs.length > 0) {
+          const durations = [...new Set(pkgs.map((p) => p.duration_days))].sort((a, b) => a - b);
+          const firstDuration = durations[0];
+          const start = new Date(startDate);
+          const newEnd = new Date(start);
+          newEnd.setDate(newEnd.getDate() + firstDuration - 1);
+          setEndDate(newEnd.toISOString().slice(0, 10));
+        }
+      })
+      .catch(() => setCityPackages([]))
+      .finally(() => setLoadingHints(false));
+  }, [cityId]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const citiesWithPackages = cities;
+
+  // Compute trip days for display
+  const tripDays = (() => {
+    try {
+      const s = new Date(startDate);
+      const e = new Date(endDate);
+      return Math.round((e - s) / 86400000) + 1;
+    } catch {
+      return 0;
+    }
+  })();
+
+  // Check if current trip duration matches any available package
+  const matchingPackages = cityPackages.filter((p) => p.duration_days === tripDays);
+  const availableDurations = [...new Set(cityPackages.map((p) => p.duration_days))].sort((a, b) => a - b);
+
+  function setDurationFromDays(days) {
+    const start = new Date(startDate);
+    const newEnd = new Date(start);
+    newEnd.setDate(newEnd.getDate() + days - 1);
+    setEndDate(newEnd.toISOString().slice(0, 10));
+  }
 
   function submit(e) {
     e.preventDefault();
@@ -42,7 +99,15 @@ export default function Preferences({ cities, languages, onSubmit, busy, health 
     try {
       money(budget);
     } catch {
-      setError("Budget must be a plain amount, e.g. 20000.00");
+      setError("Budget must be a plain amount, e.g. 35000.00");
+      return;
+    }
+    if (cityPackages.length > 0 && matchingPackages.length === 0) {
+      setError(
+        `No packages exist for a ${tripDays}-day trip to this city. ` +
+          `Available durations: ${availableDurations.join(", ")} days. ` +
+          `Click a duration chip below to adjust.`,
+      );
       return;
     }
     const langs = [lang];
@@ -80,6 +145,46 @@ export default function Preferences({ cities, languages, onSubmit, busy, health 
           </select>
         </div>
 
+        {/* Duration hints from PackagePro */}
+        {cityId && cityPackages.length > 0 && (
+          <div className="field hint-bar">
+            <label>
+              Available packages{" "}
+              <span className="badge badge--source">PackagePro.tour_packages</span>
+            </label>
+            <div className="hint-chips">
+              {cityPackages.map((p) => (
+                <button
+                  key={p.package_id}
+                  type="button"
+                  className={`hint-chip ${p.duration_days === tripDays ? "hint-chip--active" : ""}`}
+                  onClick={() => setDurationFromDays(p.duration_days)}
+                  title={`${p.name}\n${formatMoney(p.included_total, p.currency)} included total`}
+                >
+                  <span className="hint-chip__dur">{p.duration_days}d</span>
+                  <span className="hint-chip__theme">{p.theme}</span>
+                  <span className="hint-chip__price">{formatMoney(p.included_total, p.currency)}</span>
+                </button>
+              ))}
+            </div>
+            {matchingPackages.length === 0 && (
+              <p className="tiny" style={{ color: "var(--amber)", marginTop: 6 }}>
+                ⚠ No {tripDays}-day package for this city. Pick a duration above:{" "}
+                {availableDurations.map((d) => `${d}d`).join(", ")}
+              </p>
+            )}
+            {matchingPackages.length > 0 && (
+              <p className="tiny" style={{ color: "var(--green)", marginTop: 6 }}>
+                ✓ {matchingPackages.length} package(s) match your {tripDays}-day trip
+              </p>
+            )}
+          </div>
+        )}
+
+        {cityId && loadingHints && (
+          <p className="tiny muted">Loading packages from PackagePro…</p>
+        )}
+
         <div className="form-row">
           <div className="field">
             <label htmlFor="start">Start date</label>
@@ -92,7 +197,10 @@ export default function Preferences({ cities, languages, onSubmit, busy, health 
             />
           </div>
           <div className="field">
-            <label htmlFor="end">End date</label>
+            <label htmlFor="end">
+              End date{" "}
+              <span className="tiny muted">({tripDays} day{tripDays !== 1 ? "s" : ""} trip)</span>
+            </label>
             <input
               id="end"
               type="date"

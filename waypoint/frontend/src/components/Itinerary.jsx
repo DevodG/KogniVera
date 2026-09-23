@@ -59,8 +59,6 @@ export default function Itinerary({ itinerary, onSwap, busy }) {
                 comp={comp}
                 alternatives={alternativesFor(itinerary, comp)}
                 onSwap={onSwap}
-                onRemove={onRemove}
-                onRestore={onRestore}
                 busy={busy}
               />
             </div>
