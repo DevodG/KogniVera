@@ -117,6 +117,13 @@ def test_receipt_endpoint_and_confirm_endpoint(client, solver, session):
     assert after["confirmed"] is True
 
 
+def test_confirm_without_body(client, solver, session):
+    """POST with no payload at all also confirms (body is optional)."""
+    c = client.post(f"/sessions/{session}/confirm")
+    assert c.status_code == 200
+    assert c.json()["confirmation"]["status"] == "mock_confirmed"
+
+
 def test_full_tamil_heritage_flow_end_to_end(client):
     """The manual-verification scenario, executed against the API."""
     body = {

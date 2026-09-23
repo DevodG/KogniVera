@@ -194,7 +194,8 @@ def trust_receipt(session_id: str) -> dict[str, Any]:
 
 
 @router.post("/sessions/{session_id}/confirm")
-def confirm(session_id: str, request: ConfirmRequest) -> dict[str, Any]:
+def confirm(session_id: str, request: Optional[ConfirmRequest] = None) -> dict[str, Any]:
+    """Body is optional: POST with no payload or `{}` both confirm the session."""
     solver = _solver()
     try:
         return solver.confirm(session_id)
