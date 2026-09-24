@@ -24,7 +24,14 @@ from app.db.packagepro import PackageProDB  # noqa: E402
 from app.db.session import SessionDB  # noqa: E402
 from app.main import create_app, reset_stores_for_tests  # noqa: E402
 
-PACKAGEPRO_PATH = Path(__file__).resolve().parents[3] / "PackagePro" / "data" / "PS-04.db"
+PACKAGEPRO_PATH = None
+for _depth in (2, 3, 4):
+    _candidate = Path(__file__).resolve().parents[_depth] / "PackagePro" / "data" / "PS-04.db"
+    if _candidate.exists():
+        PACKAGEPRO_PATH = _candidate
+        break
+if PACKAGEPRO_PATH is None:
+    PACKAGEPRO_PATH = Path(__file__).resolve().parents[2] / "PackagePro" / "data" / "PS-04.db"
 
 
 @pytest.fixture(scope="session")

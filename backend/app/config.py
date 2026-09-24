@@ -9,13 +9,14 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-# Project roots. The repository may be checked out as ``waypoint/`` or its
-# contents may sit at the workspace root; both layouts are supported.
-_WORKSPACE = Path(__file__).resolve().parents[3]
-if (_WORKSPACE / "PackagePro").exists():
-    PROJECT_ROOT = _WORKSPACE
-else:
-    PROJECT_ROOT = Path(__file__).resolve().parents[2]
+# Project roots. Walk up from config.py looking for the PackagePro directory.
+# Supports both ``waypoint/backend/app/`` (nested) and ``backend/app/`` (flat).
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+for _depth in (2, 3, 4):
+    _candidate = Path(__file__).resolve().parents[_depth]
+    if (_candidate / "PackagePro").exists():
+        PROJECT_ROOT = _candidate
+        break
 
 BACKEND_ROOT = Path(__file__).resolve().parents[1]
 
